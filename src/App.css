@@ -2,3 +2,15 @@
   text-align: center;
 }
 
+.App-logo {
+  margin: 10px auto;
+  padding: 20px 0;
+  width: 144px;
+}
+
+.btn {
+  border: 1px solid transparent;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}

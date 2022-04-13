@@ -1,0 +1,22 @@
+.Book{
+    margin: 0.5rem;
+    min-height: 30px;
+    min-width: 320px;
+}
+
+.Book-link {
+    color: #000;
+    display: block;
+    text-decoration: none;
+    position: relative;
+    width: 100%;
+  }
+
+.Book-link span:first-of-type {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.Book-link span:last-of-type {
+    font-weight: lighter;
+}
