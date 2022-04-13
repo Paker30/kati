@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
-import { fetchAll, insertBook } from '../services/books';
+import { getAll, insertBook } from '../services/books';
 import BooksContext from '../context/books';
 
 const formatBook = ({ id, key, doc }) => ({ id, key, author: doc.author, title: doc.title })
@@ -10,7 +10,7 @@ export const useBooks = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetchAll()
+        getAll()
             .then((books) => {
                 setLoading(false);
                 setBooks(books.map(formatBook));

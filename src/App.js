@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Link, Switch, Route } from 'wouter';
 import Header from 'components/Header';
 import Detail from 'pages/Detail';
@@ -10,18 +10,20 @@ const HomePage = React.lazy(() => import('./pages/Home'));
 function App() {
   return (
     <div className="App">
-      <section>
-        <BooksContextProvider>
+      <Suspense fallback={null}>
+        <section>
           <Header />
           <Link to="/">
             <h1>KATI</h1>
           </Link>
-          <Switch>
-            <Route component={HomePage} path="/" />
-            <Route component={Detail} path="/book/:id" />
-          </Switch>
-        </BooksContextProvider>
-      </section>
+          <BooksContextProvider>
+            <Switch>
+              <Route component={HomePage} path="/" />
+              <Route component={Detail} path="/book/:id" />
+            </Switch>
+          </BooksContextProvider>
+        </section>
+      </Suspense>
     </div>
   );
 }

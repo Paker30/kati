@@ -1,10 +1,19 @@
 import React from 'react';
-import { useBooks } from 'hooks/useBooks';
+import useSingleBook from 'hooks/useSingleBook';
 import Book from 'components/Book';
 
 export default function Detail({ params }) {
-    const { books } = useBooks();
-    const book = books.find(({ id }) => id === params.id);
+    const { book, isLoading } = useSingleBook({ id: params.id });
+    if (isLoading) {
+        return (<>
+            <div>Waiting for it...</div>
+        </>)
+    }
+
+    if(!book){
+        return null;
+    }
+
     return (
         <>
             <h3>{book.title}</h3>

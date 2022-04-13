@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <header className='gf-header'>
-      <button className='btn' onClick={handleClick}>
+      {/* <button className='btn' onClick={handleClick}>
         <span aria-label="Add book to list" role="img">
         ＋
         </span>
@@ -24,7 +24,7 @@ export default function Header() {
         <Modal onClose={handleClose}>
           <New />
         </Modal>
-      )}
+      )} */}
     </header>
   )
 }
