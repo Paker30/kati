@@ -22,3 +22,7 @@
     display: block;
     margin-bottom: 32px;
   }
+
+.modal-btn {
+  margin-left: auto;
+}

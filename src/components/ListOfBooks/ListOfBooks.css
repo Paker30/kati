@@ -1,0 +1,7 @@
+.ListOfBooks .Book{
+    min-height: 40px;
+    border-bottom: 1px solid var(--brand-color_4);
+    justify-content: center;
+    margin: 0.5rem;
+    align-items:center
+}

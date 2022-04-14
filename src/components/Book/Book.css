@@ -1,7 +1,6 @@
 .Book{
-    margin: 0.5rem;
-    min-height: 30px;
-    min-width: 320px;
+    display: flex;
+    
 }
 
 .Book-link {
