@@ -11,12 +11,12 @@ function App() {
   return (
     <div className="App">
       <Suspense fallback={null}>
-        <section>
-          <Header />
-          <Link to="/">
-            <h1>KATI</h1>
-          </Link>
+        <section className='App-content'>
           <BooksContextProvider>
+            <Header />
+            <Link to="/">
+              <h1>KATI</h1>
+            </Link>
             <Switch>
               <Route component={HomePage} path="/" />
               <Route component={Detail} path="/book/:id" />

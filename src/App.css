@@ -8,9 +8,18 @@
   width: 144px;
 }
 
+.App-content{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 16px;
+}
+
 .btn {
   border: 1px solid transparent;
   padding: .5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
+  background-color: var(--brand-color_2);
+  color: var(--theme-body-txt);
 }
