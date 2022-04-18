@@ -1,0 +1,7 @@
+.Search{
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin: 0 auto 30px;
+}

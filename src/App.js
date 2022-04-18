@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Link, Switch, Route } from 'wouter';
 import Header from 'components/Header';
 import Detail from 'pages/Detail';
+import SearchResults from 'pages/SearchResults';
 import { BooksContextProvider } from 'context/books';
 import './App.css';
 
@@ -20,6 +21,7 @@ function App() {
             <Switch>
               <Route component={HomePage} path="/" />
               <Route component={Detail} path="/book/:id" />
+              <Route component={SearchResults} path="/search/:keyword/:category" />
             </Switch>
           </BooksContextProvider>
         </section>
