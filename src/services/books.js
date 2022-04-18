@@ -7,13 +7,9 @@ const db = new PouchDB(DATA_BASE_NAME);
 
 export const getAll = () => db.allDocs({ include_docs: true, descending: true }).then(({ rows }) => rows);
 
-const getByAuthor = ({ keyword }) => {
-    return db.find({selector: { author: keyword } }).then(({ docs }) => docs);
-}
+const getByAuthor = ({ keyword }) => db.find({selector: { author: { $regex: keyword } } }).then(({ docs }) => docs);
 
-const getByTitle = ({ keyword }) => {
-    return db.find({selector: { title: keyword } }).then(({ docs }) => docs);
-}
+const getByTitle = ({ keyword }) => db.find({selector: { title: {$regex: keyword} } }).then(({ docs }) => docs);
 
 export const insertBook = (book) => db.put({...book, _id: book.id});
 
