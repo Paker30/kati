@@ -15,6 +15,8 @@ export const insertBook = (book) => db.put({...book, _id: book.id});
 
 export const get = (id) => db.get(id);
 
+export const update = (book) => db.put(book);
+
 export const getBy = {
     author: getByAuthor,
     title: getByTitle

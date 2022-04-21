@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useBooks } from 'hooks/useBooks';
-import { get } from 'services/books';
+import { get, update } from 'services/books';
 
-export default function useSingleGif ({ id }) {
+export default function useSingleGif({ id }) {
     const { books } = useBooks();
     const bookFromCache = books.find((book) => book.id === id);
 
@@ -23,5 +23,10 @@ export default function useSingleGif ({ id }) {
         }
     }, [book, id]);
 
-    return { book, isLoading };
+    const setRead = useCallback(
+        (isReaded) => update({ ...book, _id: book.id, _rev: book._rev, isReaded })
+            .then(({ rev }) => setBook((previousBook) => ({ ...previousBook, isReaded, _rev: rev })))
+    );
+
+    return { book, isLoading, setRead };
 };

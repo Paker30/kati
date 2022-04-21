@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, useCallback } from 'react';
 import { getAll, insertBook, getBy } from '../services/books';
 import BooksContext from '../context/books';
 
-const formatBook = ({ id, key, doc, author, title }) => ({ id, key, author: author ?? doc.author, title: title ?? doc.title });
+const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
 
 export const useBooks = ({ keyword, category} = { keyword: null }) => {
     const [loading, setLoading] = useState(false);
