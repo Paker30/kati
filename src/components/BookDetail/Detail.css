@@ -1,0 +1,22 @@
+.BookDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--brand-color_5);
+    color: var(--theme-body-dark-txt);
+    padding: 1rem;
+}
+
+.BookDetails header {
+    display: flex;
+}
+
+.BookDetails header button {
+    margin-left: auto;
+}
+
+.BookDetails-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start
+}

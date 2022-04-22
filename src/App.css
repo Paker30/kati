@@ -23,3 +23,12 @@
   background-color: var(--brand-color_2);
   color: var(--theme-body-txt);
 }
+
+.Book-btn {
+  background: transparent;
+  border: none;
+}
+
+.Book-btn:hover{
+  cursor: pointer;
+}

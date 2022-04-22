@@ -1,6 +1,6 @@
 import React from 'react';
 import useSingleBook from 'hooks/useSingleBook';
-import Book from 'components/Book';
+import BookDetail from 'components/BookDetail';
 
 export default function Detail({ params }) {
     const { book, isLoading } = useSingleBook({ id: params.id });
@@ -16,8 +16,7 @@ export default function Detail({ params }) {
 
     return (
         <>
-            <h3>{book.title}</h3>
-            <Book {...book} />
+            <BookDetail {...book} />
         </>
     )
 }

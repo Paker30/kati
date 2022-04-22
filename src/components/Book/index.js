@@ -20,8 +20,8 @@ export default function Book({ id }) {
       </Link>
       {
         isReaded
-        ? <button onClick={handleRead(false)}>📖</button>
-        : <button onClick={handleRead(true)}>📘</button>
+        ? <button className="Book-btn" onClick={handleRead(false)}>📖</button>
+        : <button className="Book-btn" onClick={handleRead(true)}>📘</button>
       }
     </div>
   )

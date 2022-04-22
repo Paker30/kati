@@ -17,6 +17,7 @@ e76f51 */
   --fz: 16px;
   --theme-body-bg: #DAE0E6;
   --theme-body-txt: #f3f3f3;
+  --theme-body-dark-txt: #000000;
   --search-size-mx-h: 3rem;
   --zIndex-header: 20;
   --zIndex-component: 5;

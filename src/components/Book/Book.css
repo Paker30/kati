@@ -3,15 +3,6 @@
     background-color: var(--brand-color_5);
 }
 
-.Book button {
-    background: transparent;
-    border: none;
-}
-
-.Book button:hover{
-    cursor: pointer;
-}
-
 .Book-link {
     color: #000;
     display: block;
