@@ -3,14 +3,7 @@ import './Detail.css';
 import useSingleBook from 'hooks/useSingleBook';
 
 
-export default function BookDetail({ id }) {
-  const { setRead, book } = useSingleBook({ id });
-  const { title, author, isReaded } = book;
-
-  const handleRead = (isRead) => (event) => {
-    event.preventDefault();
-    setRead(isRead);
-  };
+export default function BookDetail({ author, title, isReaded }) {
 
   return (
     <div className="BookDetails">
@@ -18,8 +11,8 @@ export default function BookDetail({ id }) {
         <h3>{title}</h3>
         {
           isReaded
-            ? <button className="Book-btn" onClick={handleRead(false)}>📖</button>
-            : <button className="Book-btn" onClick={handleRead(true)}>📘</button>
+            ? <span>📖</span>
+            : <span>📘</span>
         }
       </header>
       <section className="BookDetails-body">

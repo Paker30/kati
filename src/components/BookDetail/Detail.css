@@ -9,9 +9,10 @@
 
 .BookDetails header {
     display: flex;
+    align-items: center;
 }
 
-.BookDetails header button {
+.BookDetails header span {
     margin-left: auto;
 }
 
