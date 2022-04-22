@@ -14,10 +14,11 @@ function App() {
       <Suspense fallback={null}>
         <section className='App-content'>
           <BooksContextProvider>
-            <Header />
-            <Link to="/">
-              <h1>KATI</h1>
-            </Link>
+            <Header>
+              <Link to="/">
+                <h1>KATI</h1>
+              </Link>
+            </Header>
             <Switch>
               <Route component={HomePage} path="/" />
               <Route component={Detail} path="/book/:id" />

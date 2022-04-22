@@ -1,5 +1,6 @@
 .Book{
     display: flex;
+    background-color: var(--brand-color_5);
 }
 
 .Book button {

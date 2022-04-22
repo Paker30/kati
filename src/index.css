@@ -15,7 +15,7 @@ e76f51 */
 
 :root {
   --fz: 16px;
-  --theme-body-bg: #006ba6;
+  --theme-body-bg: #DAE0E6;
   --theme-body-txt: #f3f3f3;
   --search-size-mx-h: 3rem;
   --zIndex-header: 20;
@@ -24,6 +24,8 @@ e76f51 */
   --brand-color_2: #d81159;
   --brand-color_3: #ffbc42;
   --brand-color_4: #0496ff;
+  --brand-color_5: #FFFFFF;
+  --newCommunityTheme-postLine: #ccc;
 }
 html {
   box-sizing: border-box;

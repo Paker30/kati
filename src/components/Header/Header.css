@@ -1,5 +1,14 @@
 .gf-header {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+    align-content: space-between;
+    flex-flow: row-reverse;
     padding: 1rem;
+    background-color: var(--brand-color_5);
+    margin-bottom: 30px;
+}
+
+.gf-header section {
+    margin-right: auto;
+    color:black;
 }
