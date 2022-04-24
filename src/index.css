@@ -14,7 +14,9 @@ e76f51 */
 
 
 :root {
-  --fz: 16px;
+  --fz: 13px;
+  --large-fz: 16px;
+  --min-width: 55rem;
   --theme-body-bg: #DAE0E6;
   --theme-body-txt: #f3f3f3;
   --theme-body-dark-txt: #000000;

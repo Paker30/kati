@@ -28,7 +28,7 @@ export default function SearchForm({ initialKeyword = '', initialCategory = CATE
 
     return (
         <form onSubmit={handleSubmit} className="Search">
-            <button className='btn'>Search</button>
+            <button className='btn'>🔎</button>
             <input
                 type="text"
                 placeholder='Search a book here...'

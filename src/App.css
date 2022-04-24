@@ -20,7 +20,7 @@
   padding: .5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
-  background-color: var(--brand-color_2);
+  background-color: var(--brand-color_4);
   color: var(--theme-body-txt);
 }
 
@@ -31,4 +31,10 @@
 
 .Book-btn:hover{
   cursor: pointer;
+}
+
+@media screen and (min-width: 55rem) {
+  .App {
+    font-size: var(--large-fz);
+  }
 }
