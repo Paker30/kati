@@ -13,13 +13,11 @@ const getByAuthor = ({ keyword }) => db.find({selector: { author: { $regex: keyw
 
 const getByTitle = ({ keyword }) => db.find({selector: { title: {$regex: keyword} } }).then(({ docs }) => docs);
 
-export const insertBook = (book) => db.put({ ...book, _id: book.id, updated: new Date().getTime() });
+export const insert = (book) => db.put({ ...book, _id: book.id, updated: new Date().getTime() });
 
-export const get = (id) => db.get(id);
+export const get = db.get;
 
-export const update = (book) => db.upsert(book.id, (doc) => ({ ...doc, ...book, updated: new Date().getTime() }));
-
-export const getAllCursor = () => db.getAllCursor();
+export const update = (book) => db.put({ ...book, updated: new Date().getTime() });
 
 export const getBy = {
     author: getByAuthor,

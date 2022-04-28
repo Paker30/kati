@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
-import { getAll, insertBook, getBy } from '../services/books';
+import { getAll, insert, getBy } from '../services/books';
 import BooksContext from '../context/books';
 
 const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
@@ -27,7 +27,7 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
 
     const addBook = useCallback((book) => {
         setLoading(true);
-        insertBook(book)
+        insert(book)
             .then(() => {
                 setBooks((books) => [...books, book]);
                 setLoading(false);
