@@ -7,7 +7,7 @@ import useRemote from 'hooks/useRemote';
 export default function Header({ children }) {
 
   const [showModal, setShowModal] = useState(false);
-  const { sync, credentials } = useRemote();
+  const { sync, drive } = useRemote();
 
   const handleClick = () => {
     setShowModal(true);
@@ -16,15 +16,17 @@ export default function Header({ children }) {
     setShowModal(false);
   };
   const handleSynchronize = () => {
-    sync.syncNow()
-      .catch((error) => {
-        if (error.name === "Requesterroror" && error.code === 401) {
-          console.error('Bad credentials');
-        }
-        else {
-          console.error(error);
-        }
-      });
+    if (sync.isInit()){
+      sync.syncNow(true)
+        .catch((error) => {
+          if (error.name === "RequestError" && error.code === 401) {
+            console.error('Bad credentials');
+          }
+          else {
+            console.error(error);
+          }
+        });
+    }
   };
 
   return (
@@ -34,12 +36,11 @@ export default function Header({ children }) {
           ＋
         </span>
       </button>
-      {credentials.accessToken && (<button className='btn' onClick={handleSynchronize}>
+      <button className='btn' onClick={handleSynchronize}>
         <span aria-label="Synchronize remote book list" role="img">
           🔁
         </span>
       </button>)
-      }
       {showModal && (
         <Modal onClose={handleClose}>
           <New />

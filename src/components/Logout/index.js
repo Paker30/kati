@@ -7,7 +7,6 @@ export default function Login() {
     const { setCredentials } = useCredentials();
 
     const handleSuccess = (response) => {
-        console.log(response);
         setCredentials({});
     };
 

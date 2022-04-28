@@ -1,6 +1,8 @@
 import PouchDB from 'pouchdb-browser';
-import PouchDBFind from 'pouchdb-find'
+import PouchDBFind from 'pouchdb-find';
+import PouchDbUpsert from 'pouchdb-upsert';
 PouchDB.plugin(PouchDBFind);
+PouchDB.plugin(PouchDbUpsert);
 const DATA_BASE_NAME = 'kati';
 
 const db = new PouchDB(DATA_BASE_NAME);
@@ -15,7 +17,7 @@ export const insertBook = (book) => db.put({ ...book, _id: book.id, updated: new
 
 export const get = (id) => db.get(id);
 
-export const update = (book) => db.put({...book, updated: new Date().getTime() });
+export const update = (book) => db.upsert(book.id, (doc) => ({ ...doc, ...book, updated: new Date().getTime() }));
 
 export const getAllCursor = () => db.getAllCursor();
 

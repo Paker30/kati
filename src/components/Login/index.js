@@ -6,19 +6,19 @@ export default function Login() {
 
   const { setCredentials } = useCredentials();
   const handleSuccess = (response) => {
-    console.log(response);
-    setCredentials(response.profileObj);
+    setCredentials(response);
   };
 
   const handleFailure = (response) => {
-    console.log(response);
+    console.error(response);
     setCredentials({});
   };
 
   return (
     <div>
       <GoogleLogin
-        clientId="700033872626-p4lqikt2b2k9eekcf578v58rt0o4mepp.apps.googleusercontent.com"
+        clientId="700033872626-pqcb1sglplgciuujlpjql7p5bmrcdns8.apps.googleusercontent.com"
+        scope='https://www.googleapis.com/auth/drive.appdata'
         buttonText="Login"
         onSuccess={handleSuccess}
         onFailure={handleFailure}

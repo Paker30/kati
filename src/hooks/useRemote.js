@@ -8,7 +8,7 @@ export default function useRemote() {
     useEffect(() => {
         if (credentials.accessToken) {
             const googleCloud = drive.google({
-                getAccessToken: () => credentials.accessToken,
+                getAccessToken: () => Promise.resolve(credentials.accessToken),
             });
 
             sync.use(googleCloud);
@@ -16,5 +16,5 @@ export default function useRemote() {
         }
     }, [credentials]);
 
-    return { sync, credentials };
+    return { sync, drive, credentials };
 };
