@@ -1,10 +1,19 @@
-import React from 'react';
-import { GoogleLogin, useGoogleLogin } from 'react-google-login';
+import React, { useEffect } from 'react';
+import { useLocation } from "wouter";
+import { GoogleLogin } from 'react-google-login';
 import useCredentials from 'hooks/useCredentials';
 
 export default function Login() {
 
-  const { setCredentials } = useCredentials();
+  const { setCredentials, credentials } = useCredentials();
+  const [_,pushLocation] = useLocation();
+
+  useEffect(() => {
+    if (credentials.accessToken) {
+      pushLocation('/');
+    }
+  }, [credentials]);
+
   const handleSuccess = (response) => {
     setCredentials(response);
   };

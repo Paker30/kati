@@ -6,6 +6,7 @@ export default function useRemote() {
     const { credentials } = useCredentials();
 
     useEffect(() => {
+        console.log(`credentials ${JSON.stringify(credentials)}`);
         if (credentials.accessToken) {
             const googleCloud = drive.google({
                 getAccessToken: () => Promise.resolve(credentials.accessToken),
