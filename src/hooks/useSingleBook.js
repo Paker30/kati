@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useBooks } from 'hooks/useBooks';
-import { get, update } from 'services/books';
+import db from 'services/database';
 
 export default function useSingleGif({ id }) {
     const { books } = useBooks();
@@ -12,20 +12,28 @@ export default function useSingleGif({ id }) {
     useEffect(() => {
         if (!book) {
             setIsLoading(true);
-            get(id)
+            db.then((store) => store.get('books', id))
                 .then((book) => {
                     setIsLoading(false);
                     setBook(book);
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error(error);
                     setIsLoading(false);
                 });
         }
     }, [book, id]);
 
     const setRead = useCallback(
-        (isReaded) => update({ ...book, _id: book.id, _rev: book._rev, isReaded })
-            .then(({ rev }) => setBook((previousBook) => ({ ...previousBook, isReaded, _rev: rev })))
+        (read) => {
+            return db
+                .then((store) => store.put('books', { ...book, read }))
+                .then(() => {
+                    setBook((previousBook) => {
+                        return { ...previousBook, read }
+                    })
+                })
+        }
     );
 
     return { book, isLoading, setRead };

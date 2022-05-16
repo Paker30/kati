@@ -1,8 +1,6 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
-import { getAll, insertBook, getBy } from '../services/books';
+import db from '../services/database';
 import BooksContext from '../context/books';
-
-const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
 
 export const useBooks = ({ keyword, category} = { keyword: null }) => {
     const [loading, setLoading] = useState(false);
@@ -12,11 +10,11 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
 
     useEffect(() => {
         setLoading(true);
-        const query = category ? getBy[category]({keyword: keywordToUse}) : getAll();
-        query
+        // const query = category ? getBy[category]({keyword: keywordToUse}) : db.then((store) =>store.getAll('books'));
+        db.then((store) =>store.getAll('books'))
             .then((books) => {
                 setLoading(false);
-                setBooks(books.map(formatBook));
+                setBooks(books);
                 localStorage.setItem('lastKeyword', keyword)
             })
             .catch((error) => {
@@ -27,15 +25,17 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
 
     const addBook = useCallback((book) => {
         setLoading(true);
-        insertBook(book)
-            .then(() => {
-                setBooks((books) => [...books, book]);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error(error);
-                setLoading(false);
-            });
+        db.then((store) => {
+            store.add('books', book)
+                .then(() => {
+                    setBooks((books) => [...books, book]);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    setLoading(false);
+                });
+        })
     }, [setBooks]);
 
     return { loading, books, addBook };

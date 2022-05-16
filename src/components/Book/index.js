@@ -5,7 +5,7 @@ import useSingleBook from 'hooks/useSingleBook';
 
 export default function Book({ id }) {
   const { setRead, book } = useSingleBook({ id });
-  const {title, author, isReaded} = book;
+  const {title, author, read} = book;
 
   const handleRead = (isRead) => (event) => {
     event.preventDefault();
@@ -19,7 +19,7 @@ export default function Book({ id }) {
         <span>{author}</span>
       </Link>
       {
-        isReaded
+        read
         ? <button className="Book-btn" onClick={handleRead(false)}>📖</button>
         : <button className="Book-btn" onClick={handleRead(true)}>📘</button>
       }

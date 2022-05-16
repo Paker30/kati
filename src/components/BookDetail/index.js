@@ -3,14 +3,14 @@ import './Detail.css';
 import useSingleBook from 'hooks/useSingleBook';
 
 
-export default function BookDetail({ author, title, isReaded }) {
+export default function BookDetail({ author, title, read }) {
 
   return (
     <div className="BookDetails">
       <header>
         <h3>{title}</h3>
         {
-          isReaded
+          read
             ? <span>📖</span>
             : <span>📘</span>
         }
