@@ -28,11 +28,7 @@ export default function useSingleGif({ id }) {
         (read) => {
             return db
                 .then((store) => store.put('books', { ...book, read }))
-                .then(() => {
-                    setBook((previousBook) => {
-                        return { ...previousBook, read }
-                    })
-                })
+                .then(() => setBook((previousBook) => ({ ...previousBook, read })))
         }
     );
 

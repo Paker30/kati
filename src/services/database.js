@@ -1,4 +1,4 @@
-import { openDB } from 'idb/with-async-ittr';
+import { openDB, unwrap } from 'idb/with-async-ittr';
 // import { database } from 'config';
 
 const objectStore = 'books';
@@ -19,5 +19,6 @@ const db = openDB('KATI', 1, {
 export default db;
 
 export {
-    objectStore
+    objectStore,
+    unwrap
 }

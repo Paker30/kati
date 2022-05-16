@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Header.css';
 import Modal from 'components/Modal';
 import New from 'pages/New';
+import Download from 'components/Download';
 
 export default function Header({ children }) {
 
@@ -25,6 +26,7 @@ export default function Header({ children }) {
           <New />
         </Modal>
       )}
+      <Download />
       <section className='children'>
         {children}
       </section>
