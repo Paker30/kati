@@ -23,11 +23,8 @@ export default function Header({ children }) {
   };
   const handleSynchronize = (event) => {
     event.preventDefault();
-    if(isEmpty(credentials)){
-      pushLocation('/login');
-    }
 
-    if (sync.isInit()){
+    if (sync.isInit()) {
       sync.syncNow(false)
         .catch((error) => {
           if (error.name === "RequestError" && error.code === 401) {
@@ -39,6 +36,10 @@ export default function Header({ children }) {
         });
     }
   };
+  const handleLogin = (event) => {
+    event.preventDefault();
+    pushLocation('/login');
+  };
 
   return (
     <header className='gf-header'>
@@ -47,9 +48,14 @@ export default function Header({ children }) {
           ＋
         </span>
       </button>
-      <button className='btn' onClick={handleSynchronize}>
+      <button className='btn' onClick={handleSynchronize} disabled={isEmpty(credentials)}>
         <span aria-label="Synchronize remote book list" role="img">
           🔁
+        </span>
+      </button>
+      <button className='btn' onClick={handleLogin}>
+        <span aria-label="Add book to list" role="img">
+          Login
         </span>
       </button>)
       {showModal && (
