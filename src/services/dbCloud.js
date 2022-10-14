@@ -1,18 +1,20 @@
 import { dbToCloud, drive } from 'db-to-cloud';
-import { update, getAll, get } from './books';
+import { update, getAll, get, insert } from './books';
 
 const sync = dbToCloud({
     onGet: get,
     onFirstSync: async () => {
         return getAll()
             .then((books) =>
-                Promise.all(books.map((book) =>{
+                Promise.all(books.map((book) => {
                     return sync.put(book.doc._id, book.doc.updated)
                 }))
             );
     },
     onPut: (book) => {
-        update(book)
+        get(book.title)
+            .then(() => update(book))
+            .catch(() => insert({ id: book.id, title: book.title, author: book.author }))
             .catch((error) => {
                 if (error.type === 'outdateDoc') {
                     sync.put(book._id, book.updated);
