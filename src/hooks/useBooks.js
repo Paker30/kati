@@ -38,5 +38,7 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
             });
     }, [setBooks]);
 
-    return { loading, books, addBook };
+    const populateBook = useCallback((book) => setBooks((books) => [...books, book.doc]), [setBooks]);
+
+    return { loading, books, addBook, populateBook };
 };

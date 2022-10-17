@@ -5,6 +5,8 @@ import Modal from 'components/Modal';
 import New from 'pages/New';
 import useRemote from 'hooks/useRemote';
 import useCredentials from 'hooks/useCredentials';
+import { useBooks } from 'hooks/useBooks';
+import { getAll } from '../../services/books';
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
@@ -14,6 +16,7 @@ export default function Header({ children }) {
   const { sync, drive } = useRemote();
   const { credentials } = useCredentials();
   const [_, pushLocation] = useLocation();
+  const { populateBook } = useBooks();
 
   const handleClick = (event) => {
     setShowModal(true);
@@ -26,6 +29,7 @@ export default function Header({ children }) {
 
     if (sync.isInit()) {
       sync.syncNow(false)
+        .then(() => getAll().then((books) => books.map(populateBook)))
         .catch((error) => {
           if (error.name === "RequestError" && error.code === 401) {
             console.error('Bad credentials');
