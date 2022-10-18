@@ -3,6 +3,12 @@ import { getAll, insert, getBy } from '../services/books';
 import BooksContext from '../context/books';
 
 const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
+const mergeBooks = (books) => (newBook) => {
+    if (!books.find(({ id }) => id === newBook.id)) {
+        return [...books, newBook];
+    }
+    return [...books.filter(({ id }) => id !== newBook.id), newBook ];
+};
 
 export const useBooks = ({ keyword, category} = { keyword: null }) => {
     const [loading, setLoading] = useState(false);
@@ -38,7 +44,7 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
             });
     }, [setBooks]);
 
-    const populateBook = useCallback((book) => setBooks((books) => [...books, book.doc]), [setBooks]);
+    const populateBook = useCallback((book) => setBooks((books) => mergeBooks(books)(book.doc)), [setBooks]);
 
     return { loading, books, addBook, populateBook };
 };

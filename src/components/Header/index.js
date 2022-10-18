@@ -28,16 +28,20 @@ export default function Header({ children }) {
     event.preventDefault();
 
     if (sync.isInit()) {
-      sync.syncNow(false)
-        .then(() => getAll().then((books) => books.map(populateBook)))
-        .catch((error) => {
-          if (error.name === "RequestError" && error.code === 401) {
-            console.error('Bad credentials');
-          }
-          else {
-            console.error(error);
-          }
-        });
+      getAll()
+      .then((storedBooks) => storedBooks.map(({ doc }) => sync.put(doc._id, doc._rev)))
+      .then(() => 
+          sync.syncNow(false)
+            .then(() => getAll().then((books) => books.map(populateBook)))
+            .catch((error) => {
+              if (error.name === "RequestError" && error.code === 401) {
+                console.error('Bad credentials');
+              }
+              else {
+                console.error(error);
+              }
+            })
+      )
     }
   };
   const handleLogin = (event) => {
