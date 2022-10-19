@@ -13,7 +13,7 @@ const isEmpty = (obj) => Object.keys(obj).length === 0;
 export default function Header({ children }) {
 
   const [showModal, setShowModal] = useState(false);
-  const { sync, drive } = useRemote();
+  const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [_, pushLocation] = useLocation();
   const { populateBook } = useBooks();
@@ -28,20 +28,18 @@ export default function Header({ children }) {
     event.preventDefault();
 
     if (sync.isInit()) {
-      getAll()
-      .then((storedBooks) => storedBooks.map(({ doc }) => sync.put(doc._id, doc._rev)))
-      .then(() => 
-          sync.syncNow(false)
-            .then(() => getAll().then((books) => books.map(populateBook)))
-            .catch((error) => {
-              if (error.name === "RequestError" && error.code === 401) {
-                console.error('Bad credentials');
-              }
-              else {
-                console.error(error);
-              }
-            })
-      )
+      sync.syncNow(false)
+        .then(() => getAll().then((books) => {
+          books.map(populateBook)
+        }))
+        .catch((error) => {
+          if (error.name === "RequestError" && error.code === 401) {
+            console.error('Bad credentials');
+          }
+          else {
+            console.error(error);
+          }
+        })
     }
   };
   const handleLogin = (event) => {

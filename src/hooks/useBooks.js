@@ -33,10 +33,11 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
 
     const addBook = useCallback((book) => {
         setLoading(true);
-        insert(book)
-            .then(() => {
-                setBooks((books) => [...books, book]);
+        return insert(book)
+            .then((added) => {
                 setLoading(false);
+                setBooks((books) => [...books, book]);
+                return added;
             })
             .catch((error) => {
                 console.error(error);
@@ -44,7 +45,7 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
             });
     }, [setBooks]);
 
-    const populateBook = useCallback((book) => setBooks((books) => mergeBooks(books)(book.doc)), [setBooks]);
+    const populateBook = useCallback((book) => setBooks((books) => [...books, book.doc]), [setBooks]);
 
     return { loading, books, addBook, populateBook };
 };

@@ -1,6 +1,15 @@
 import { dbToCloud, drive } from 'db-to-cloud';
 import { update, getAll, get, insert } from './books';
 
+const remove = (removeKey) => (object) => {
+    return Object.keys(object).reduce((acc, key) => {
+        if(key !== removeKey) {
+            return {...acc, [key]: object[key]};
+        }
+        return acc;
+    }, {});
+};
+
 const sync = dbToCloud({
     onGet: get,
     onFirstSync: async () => {
@@ -12,14 +21,9 @@ const sync = dbToCloud({
             );
     },
     onPut: (book) => {
-        get(book.title)
-            .then(() => update(book))
-            .catch(() => insert({ id: book.id, title: book.title, author: book.author }))
-            .catch((error) => {
-                if (error.type === 'outdateDoc') {
-                    sync.put(book._id, book.updated);
-                }
-            })
+        return get(book.id)
+            .then((localeBook) => update({...localeBook, author: book.author, isRead: book.isRead, title: book.title}))
+            .catch(() => insert(remove('_rev')(book)))
     },
     getState: async (drive) => {
         try {
