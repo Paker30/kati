@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useBooks } from 'hooks/useBooks';
 import { nanoid } from 'nanoid';
+import useRemote from 'hooks/useRemote';
 import './Add.css';
 
 
 export default function Add() {
+    const { sync } = useRemote();
     const [author, setAuthor] = useState('');
     const [title, setTitle] = useState('');
     const { addBook } = useBooks();
 
     const handleSubmit = (e) => { 
         e.preventDefault();
-        addBook({ author, title, id: nanoid() });
+        addBook({ author, title, id: nanoid(), isRead: false })
+        .then(({ id, rev}) => sync.put(id, rev));
     };
     
     return (

@@ -23,10 +23,5 @@ export default function useSingleGif({ id }) {
         }
     }, [book, id]);
 
-    const setRead = useCallback(
-        (isReaded) => update({ ...book, _id: book.id, _rev: book._rev, isReaded })
-            .then(({ rev }) => setBook((previousBook) => ({ ...previousBook, isReaded, _rev: rev })))
-    );
-
-    return { book, isLoading, setRead };
+    return { book, isLoading };
 };

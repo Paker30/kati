@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link } from 'wouter';
+import useRemote from 'hooks/useRemote';
+import { useBooks } from 'hooks/useBooks';
 import './Book.css';
-import useSingleBook from 'hooks/useSingleBook';
 
-export default function Book({ id }) {
-  const { setRead, book } = useSingleBook({ id });
-  const {title, author, isReaded} = book;
+export default function Book({ title, author, isRead, id }) {
 
-  const handleRead = (isRead) => (event) => {
+  const { sync } = useRemote();
+  const { setRead } = useBooks();
+
+  const handleRead = (id) => (event) => {
     event.preventDefault();
-    setRead(isRead);
+    setRead(id)
+      .then(({ id, rev }) => sync.put(id, rev));
   };
 
   return (
@@ -19,9 +22,9 @@ export default function Book({ id }) {
         <span>{author}</span>
       </Link>
       {
-        isReaded
-        ? <button className="Book-btn" onClick={handleRead(false)}>📖</button>
-        : <button className="Book-btn" onClick={handleRead(true)}>📘</button>
+        isRead
+          ? <button className="Book-btn" onClick={handleRead(id)}>📖</button>
+          : <button className="Book-btn" onClick={handleRead(id)}>📘</button>
       }
     </div>
   )

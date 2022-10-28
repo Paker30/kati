@@ -1,10 +1,16 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
-import { getAll, insertBook, getBy } from '../services/books';
+import { getAll, insert, getBy, update } from '../services/books';
 import BooksContext from '../context/books';
 
 const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
+const mergeBooks = (books) => (newBook) => {
+    if (!books.find(({ id }) => id === newBook.id)) {
+        return [...books, newBook];
+    }
+    return [...books.filter(({ id }) => id !== newBook.id), newBook];
+};
 
-export const useBooks = ({ keyword, category} = { keyword: null }) => {
+export const useBooks = ({ keyword, category } = { keyword: null }) => {
     const [loading, setLoading] = useState(false);
     const { books, setBooks } = useContext(BooksContext);
 
@@ -12,7 +18,7 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
 
     useEffect(() => {
         setLoading(true);
-        const query = category ? getBy[category]({keyword: keywordToUse}) : getAll();
+        const query = category ? getBy[category]({ keyword: keywordToUse }) : getAll();
         query
             .then((books) => {
                 setLoading(false);
@@ -27,10 +33,11 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
 
     const addBook = useCallback((book) => {
         setLoading(true);
-        insertBook(book)
-            .then(() => {
-                setBooks((books) => [...books, book]);
+        return insert(book)
+            .then((added) => {
                 setLoading(false);
+                setBooks((books) => [...books, book]);
+                return added;
             })
             .catch((error) => {
                 console.error(error);
@@ -38,5 +45,22 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
             });
     }, [setBooks]);
 
-    return { loading, books, addBook };
+    const populateBooks = useCallback((books) => setBooks(books.map(formatBook)), [books]);
+
+    const setRead = useCallback((id) => {
+        const book = books.find((book) => book.id === id);
+        return update({ ...book, isRead: !book.isRead })
+            .then((updated) => {
+                const updatedBooks = books.map((book) => {
+                    if (book.id === id) {
+                        return { ...book, isRead: !book.isRead, _rev: updated.rev }
+                    }
+                    return book;
+                });
+                setBooks(updatedBooks);
+                return updated;
+            });
+    });
+
+    return { loading, books, addBook, populateBooks, setRead };
 };

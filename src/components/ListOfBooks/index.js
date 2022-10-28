@@ -6,7 +6,7 @@ export default function ListOfBooks({ books }) {
   return (
     <div className='ListOfBooks'>
       {
-        books.map(({id ,title, author}) => <Book id={id} key={id} title={title} author={author}/>)
+        books.map(({id ,title, author, isRead}) => <Book id={id} key={id} title={title} author={author} isRead={isRead} />)
       }
     </div>
   )

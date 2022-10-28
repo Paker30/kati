@@ -1,7 +1,5 @@
 import React from 'react';
 import './Detail.css';
-import useSingleBook from 'hooks/useSingleBook';
-
 
 export default function BookDetail({ author, title, isReaded }) {
 
