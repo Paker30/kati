@@ -16,7 +16,7 @@ export default function Header({ children }) {
   const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [_, pushLocation] = useLocation();
-  const { populateBook } = useBooks();
+  const { populateBooks } = useBooks();
 
   const handleClick = (event) => {
     setShowModal(true);
@@ -29,9 +29,7 @@ export default function Header({ children }) {
 
     if (sync.isInit()) {
       sync.syncNow(false)
-        .then(() => getAll().then((books) => {
-          books.map(populateBook)
-        }))
+        .then(() => getAll().then(populateBooks))
         .catch((error) => {
           if (error.name === "RequestError" && error.code === 401) {
             console.error('Bad credentials');

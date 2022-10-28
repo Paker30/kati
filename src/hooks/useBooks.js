@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
-import { getAll, insert, getBy } from '../services/books';
+import { getAll, insert, getBy, update } from '../services/books';
 import BooksContext from '../context/books';
 
 const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
@@ -7,10 +7,10 @@ const mergeBooks = (books) => (newBook) => {
     if (!books.find(({ id }) => id === newBook.id)) {
         return [...books, newBook];
     }
-    return [...books.filter(({ id }) => id !== newBook.id), newBook ];
+    return [...books.filter(({ id }) => id !== newBook.id), newBook];
 };
 
-export const useBooks = ({ keyword, category} = { keyword: null }) => {
+export const useBooks = ({ keyword, category } = { keyword: null }) => {
     const [loading, setLoading] = useState(false);
     const { books, setBooks } = useContext(BooksContext);
 
@@ -18,7 +18,7 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
 
     useEffect(() => {
         setLoading(true);
-        const query = category ? getBy[category]({keyword: keywordToUse}) : getAll();
+        const query = category ? getBy[category]({ keyword: keywordToUse }) : getAll();
         query
             .then((books) => {
                 setLoading(false);
@@ -45,7 +45,22 @@ export const useBooks = ({ keyword, category} = { keyword: null }) => {
             });
     }, [setBooks]);
 
-    const populateBook = useCallback((book) => setBooks((books) => [...books, book.doc]), [setBooks]);
+    const populateBooks = useCallback((books) => setBooks(books.map(formatBook)), [books]);
 
-    return { loading, books, addBook, populateBook };
+    const setRead = useCallback((id) => {
+        const book = books.find((book) => book.id === id);
+        return update({ ...book, isRead: !book.isRead })
+            .then((updated) => {
+                const updatedBooks = books.map((book) => {
+                    if (book.id === id) {
+                        return { ...book, isRead: !book.isRead, _rev: updated.rev }
+                    }
+                    return book;
+                });
+                setBooks(updatedBooks);
+                return updated;
+            });
+    });
+
+    return { loading, books, addBook, populateBooks, setRead };
 };
