@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { Link, Switch, Route } from 'wouter';
-import { HeadProvider, Meta } from 'react-head';
 import Header from 'components/Header';
 import Detail from 'pages/Detail';
 import SearchResults from 'pages/SearchResults';
@@ -13,9 +12,7 @@ const HomePage = React.lazy(() => import('./pages/Home'));
 
 function App() {
   return (
-    <HeadProvider>
       <div className="App">
-      <Meta name="google-signin-client_id" content="700033872626-3luf86l08cdbcr5a1r3ktbf3i2tfrm9l.apps.googleusercontent.com" />
         <Suspense fallback={null}>
           <section className='App-content'>
             <BooksContextProvider>
@@ -36,7 +33,6 @@ function App() {
           </section>
         </Suspense>
       </div>
-    </HeadProvider>
   );
 }
 
