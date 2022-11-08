@@ -26,7 +26,7 @@ export default function Login() {
   return (
     <div>
       <GoogleLogin
-        clientId="700033872626-pqcb1sglplgciuujlpjql7p5bmrcdns8.apps.googleusercontent.com"
+        clientId="700033872626-3luf86l08cdbcr5a1r3ktbf3i2tfrm9l.apps.googleusercontent.com"
         scope='https://www.googleapis.com/auth/drive.appdata'
         buttonText="Login"
         onSuccess={handleSuccess}
