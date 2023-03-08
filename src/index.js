@@ -10,9 +10,9 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
   <HeadProvider>
-    <Meta name="google-signin-client_id" content="700033872626-pqcb1sglplgciuujlpjql7p5bmrcdns8.apps.googleusercontent.com" />
+    <Meta name="google-signin-client_id" content="700033872626-3luf86l08cdbcr5a1r3ktbf3i2tfrm9l.apps.googleusercontent.com" />
     <React.StrictMode>
-      <GoogleOAuthProvider clientId="700033872626-pqcb1sglplgciuujlpjql7p5bmrcdns8.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="700033872626-3luf86l08cdbcr5a1r3ktbf3i2tfrm9l.apps.googleusercontent.com">
         <App />
       </GoogleOAuthProvider>
     </React.StrictMode>
