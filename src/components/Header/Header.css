@@ -12,3 +12,12 @@
     margin-right: auto;
     color:black;
 }
+
+.children {
+    display: flex;
+    align-items: baseline;
+}
+
+.children h1 {
+    margin-right: 5px;
+}
