@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useBooks } from 'hooks/useBooks';
 import { nanoid } from 'nanoid';
 import useRemote from 'hooks/useRemote';

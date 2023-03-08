@@ -7,6 +7,7 @@ import Accounts from 'pages/Accounts';
 import { BooksContextProvider } from 'context/books';
 import { CredentialsContextProvider } from 'context/credentials';
 import './App.css';
+import packageInfo from '../package.json';
 
 const HomePage = React.lazy(() => import('./pages/Home'));
 
@@ -21,6 +22,7 @@ function App() {
                   <Link to="/">
                     <h1>KATI</h1>
                   </Link>
+                    <small>{packageInfo.version}</small>
                 </Header>
                 <Switch>
                   <Route component={HomePage} path="/" />
