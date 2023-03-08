@@ -45,7 +45,7 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
             });
     }, [setBooks]);
 
-    const populateBooks = useCallback((books) => setBooks(books.map(formatBook)), [books]);
+    const populateBooks = useCallback((books) => setBooks(books.map(formatBook)), [books, setBooks]);
 
     const setRead = useCallback((id) => {
         const book = books.find((book) => book.id === id);

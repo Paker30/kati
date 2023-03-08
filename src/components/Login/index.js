@@ -16,16 +16,7 @@ export default function Login() {
     if (credentials.access_token) {
       pushLocation('/');
     }
-  }, [credentials]);
-
-  
-
-  const handleFailure = (response) => {
-    console.error(response);
-    setCredentials({});
-  };
-
-  
+  }, [credentials, pushLocation]);
 
   return (
     <div>
