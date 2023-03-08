@@ -1,7 +1,6 @@
 import React from 'react';
 import { HeadProvider, Meta } from 'react-head';
 import { createRoot } from 'react-dom/client';
-import { GoogleLogin } from 'react-google-login';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
