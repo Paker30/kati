@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@react-oauth/google": "^0.8.0",
     "@svgr/webpack": "^5.5.0",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
@@ -45,7 +46,6 @@
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.0",
     "react-dom": "^18.0.0",
-    "react-google-login": "^5.2.2",
     "react-head": "^3.4.2",
     "react-refresh": "^0.11.0",
     "react-scripts": "5.0.0",

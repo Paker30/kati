@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useCredentials from 'hooks/useCredentials';
 import { drive, sync } from 'services/dbCloud';
 
@@ -7,9 +7,9 @@ export default function useRemote() {
 
     useEffect(() => {
         console.log(`credentials ${JSON.stringify(credentials)}`);
-        if (credentials.accessToken) {
+        if (credentials.access_token) {
             const googleCloud = drive.google({
-                getAccessToken: () => Promise.resolve(credentials.accessToken),
+                getAccessToken: () => Promise.resolve(credentials.access_token),
             });
 
             sync.use(googleCloud);

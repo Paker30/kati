@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation } from "wouter";
-import { GoogleLogin } from 'react-google-login';
+import { useGoogleLogin  } from '@react-oauth/google'
 import useCredentials from 'hooks/useCredentials';
 
 export default function Login() {
@@ -8,31 +8,30 @@ export default function Login() {
   const { setCredentials, credentials } = useCredentials();
   const [_,pushLocation] = useLocation();
 
+  const login = useGoogleLogin({
+    onSuccess: setCredentials,
+  });
+
   useEffect(() => {
-    if (credentials.accessToken) {
+    if (credentials.access_token) {
       pushLocation('/');
     }
   }, [credentials]);
 
-  const handleSuccess = (response) => {
-    setCredentials(response);
-  };
+  
 
   const handleFailure = (response) => {
     console.error(response);
     setCredentials({});
   };
 
+  
+
   return (
     <div>
-      <GoogleLogin
-        clientId="700033872626-3luf86l08cdbcr5a1r3ktbf3i2tfrm9l.apps.googleusercontent.com"
-        scope='https://www.googleapis.com/auth/drive.appdata'
-        buttonText="Login"
-        onSuccess={handleSuccess}
-        onFailure={handleFailure}
-        cookiePolicy={'single_host_origin'}
-      />
+      <button onClick={ () => login() }>
+        Sign in with Google
+      </button>
     </div>
   )
 }
