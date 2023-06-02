@@ -6,23 +6,24 @@ import New from 'pages/New';
 import useRemote from 'hooks/useRemote';
 import useCredentials from 'hooks/useCredentials';
 import { useBooks } from 'hooks/useBooks';
+import useModal from 'hooks/useModal';
 import { getAll } from '../../services/books';
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
 export default function Header({ children }) {
 
-  const [showModal, setShowModal] = useState(false);
+  const { showModal, setModal } = useModal();
   const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [_, pushLocation] = useLocation();
   const { populateBooks } = useBooks();
 
   const handleClick = (event) => {
-    setShowModal(true);
+    setModal(true);
   };
   const handleClose = () => {
-    setShowModal(false);
+    setModal(false);
   };
   const handleSynchronize = (event) => {
     event.preventDefault();
