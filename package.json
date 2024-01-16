@@ -92,7 +92,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
     "path-browserify": "^1.0.1",
     "web-vitals": "^2.1.4"
@@ -104,6 +104,10 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"

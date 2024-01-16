@@ -14,31 +14,29 @@ export default function Add() {
     const [title, setTitle] = useState('');
     const { addBook } = useBooks();
 
-    const handleSubmit = (e) => { 
+    const handleSubmit = (e) => {
         e.preventDefault();
         addBook({ author, title, id: nanoid(), isRead: false })
-        .then(({ id, rev}) => sync.put(id, rev))
-        .finally(() => setModal(false));
+            .then(({ id, rev }) => sync.put(id, rev))
+            .finally(() => setModal(false));
     };
-    
+
     return (
         <form className="form" onSubmit={handleSubmit}>
-            <label>
-                Author
-                <input
-                    placeholder='Author'
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
-                />
-            </label>
-            <label>
-                Title
-                <input
-                    placeholder='Title'
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-            </label>
+            <label htmlFor='author'>Author</label>
+            <input
+                placeholder='Enter author'
+                name='author'
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+            />
+            <label htmlFor='title'>Title</label>
+            <input
+                placeholder='Enter title'
+                name='title'
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
             <button className='btn'>Add</button>
         </form>
     )

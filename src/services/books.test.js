@@ -21,7 +21,7 @@ describe('books service', () => {
 
     test('getAll', () => {
         fakeGetAll.mockResolvedValueOnce({ rows: [] });
-        expect(getAll()).resolves.toBe([]);
+        expect(getAll()).resolves.toStrictEqual([]);
         expect(fakeGetAll).toBeCalledTimes(1);
     });
 
@@ -32,7 +32,7 @@ describe('books service', () => {
             title: 'El quijote',
             author: 'Cervantes'
         };
-        expect(insert(fakeBook)).resolves.toBe({ insert: true });
+        expect(insert(fakeBook)).resolves.toStrictEqual({ insert: true });
         expect(fakePut).toBeCalledTimes(1);
     });
 
@@ -44,7 +44,7 @@ describe('books service', () => {
             author: 'Cervantes',
             updated: new Date().getTime()
         };
-        expect(update(fakeBook)).resolves.toBe({ updated: true });
+        expect(update(fakeBook)).resolves.toStrictEqual({ updated: true });
         expect(fakePut).toBeCalledTimes(1);
         expect(fakePut).toBeCalledWith(fakeBook);
     });
@@ -53,13 +53,13 @@ describe('books service', () => {
         const fakeBook = { id: '1234', title: 'El quijote', author: 'Cervantes' };
         test('author', () => {
             fakeFind.mockResolvedValueOnce({ docs: [fakeBook] });
-            expect(getBy.author('cervantes')).resolves.toBe([fakeBook]);
+            expect(getBy.author('cervantes')).resolves.toStrictEqual([fakeBook]);
             expect(fakeFind).toBeCalledTimes(1);
         });
 
         test('author', () => {
             fakeFind.mockResolvedValueOnce({ docs: [fakeBook] });
-            expect(getBy.title('el quijote')).resolves.toBe([fakeBook]);
+            expect(getBy.title('el quijote')).resolves.toStrictEqual([fakeBook]);
             expect(fakeFind).toBeCalledTimes(1);
         });
     });
