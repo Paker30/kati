@@ -5,8 +5,12 @@ import SearchForm from 'components/SearchForm';
 
 export default function Home() {
 
-  const { books } = useBooks();
-  const [ listOfBooks, setListOfBooks  ] = useState(books);
+  const { books, loadBooks } = useBooks();
+  const [listOfBooks, setListOfBooks] = useState(books);
+
+  useEffect(() => {
+    loadBooks();
+  }, []);
 
   useEffect(() => {
     setListOfBooks(books);

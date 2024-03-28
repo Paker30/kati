@@ -16,7 +16,7 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
 
     const keywordToUse = keyword || localStorage.getItem('lastKeyword');
 
-    useEffect(() => {
+    const loadBooks = () => {
         setLoading(true);
         const query = category ? getBy[category]({ keyword: keywordToUse }) : getAll();
         query
@@ -29,7 +29,7 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
                 setLoading(false);
                 setBooks([]);
             });
-    }, [setBooks, keyword, category, keywordToUse]);
+    };
 
     const addBook = useCallback((book) => {
         setLoading(true);
@@ -62,5 +62,5 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
             });
     });
 
-    return { loading, books, addBook, populateBooks, setRead };
+    return { loading, books, addBook, populateBooks, setRead, loadBooks };
 };
