@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from 'react';
+import { useState, useContext, useCallback } from 'react';
 import { getAll, insert, getBy, update } from '../services/books';
 import BooksContext from '../context/books';
 
@@ -26,6 +26,7 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
                 localStorage.setItem('lastKeyword', keyword)
             })
             .catch((error) => {
+                console.error(error);
                 setLoading(false);
                 setBooks([]);
             });
