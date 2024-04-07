@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useSingleBook from 'hooks/useSingleBook';
 import BookDetail from 'components/BookDetail';
 
 export default function Detail({ params }) {
-    const { book, isLoading } = useSingleBook({ id: params.id });
+    const { book, isLoading, find } = useSingleBook();
+
+    useEffect(() => {
+        find.byId(params.id);
+    }, []);
     if (isLoading) {
         return (<>
             <div>Waiting for it...</div>
         </>)
     }
 
-    if(!book){
+    if (!book) {
         return null;
     }
 
