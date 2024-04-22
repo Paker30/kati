@@ -63,5 +63,5 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
             });
     });
 
-    return { loading, books, addBook, populateBooks, setRead, loadBooks };
+    return { loading, setLoading, books, addBook, populateBooks, setRead, loadBooks };
 };

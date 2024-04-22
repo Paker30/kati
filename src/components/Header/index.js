@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from "wouter";
 import './Header.css';
 import Modal from 'components/Modal';
@@ -17,7 +17,7 @@ export default function Header({ children }) {
   const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [_, pushLocation] = useLocation();
-  const { populateBooks } = useBooks();
+  const { populateBooks, loading, setLoading } = useBooks();
 
   const handleClick = (event) => {
     setModal(true);
@@ -29,6 +29,7 @@ export default function Header({ children }) {
     event.preventDefault();
 
     if (sync.isInit()) {
+      setLoading(true);
       sync.syncNow(false)
         .then(() => getAll().then(populateBooks))
         .catch((error) => {
@@ -39,6 +40,7 @@ export default function Header({ children }) {
             console.error(error);
           }
         })
+        .finally(() => setLoading(false));
     }
   };
   const handleLogin = (event) => {
@@ -53,11 +55,15 @@ export default function Header({ children }) {
           ＋
         </span>
       </button>
-      <button className='btn' onClick={handleSynchronize} disabled={isEmpty(credentials)}>
+      {!loading && <button className='btn' onClick={handleSynchronize} disabled={isEmpty(credentials)}>
         <span aria-label="Synchronize remote book list" role="img">
           🔁
         </span>
-      </button>
+      </button>}
+      {loading && <span>
+        Synchronizing
+      </span>
+      }
       <button className='btn' onClick={handleLogin}>
         <span aria-label="Add book to list" role="img">
           Login
