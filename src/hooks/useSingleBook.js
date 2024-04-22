@@ -2,16 +2,20 @@ import { useState, useEffect } from 'react';
 import { useBooks } from 'hooks/useBooks';
 import { get } from 'services/books';
 
-export default function useSingleGif({ id }) {
+export default function useSingleBook() {
     const { books } = useBooks();
-    const bookFromCache = books.find((book) => book.id === id);
 
-    const [book, setBook] = useState(bookFromCache);
+    const [book, setBook] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        if (!book) {
-            setIsLoading(true);
+    const findById = (id) => {
+        setIsLoading(true);
+        const bookFromCache = books.find((book) => book.id === id);
+        if (bookFromCache) {
+            setBook(bookFromCache);
+            setIsLoading(false);
+        }
+        else {
             get(id)
                 .then((book) => {
                     setIsLoading(false);
@@ -21,7 +25,7 @@ export default function useSingleGif({ id }) {
                     setIsLoading(false);
                 });
         }
-    }, [book, id]);
+    };
 
-    return { book, isLoading };
+    return { book, isLoading, find: { byId: findById } };
 };
