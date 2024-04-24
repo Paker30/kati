@@ -17,7 +17,7 @@ export default function Header({ children }) {
   const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [_, pushLocation] = useLocation();
-  const { populateBooks, loading, setLoading } = useBooks();
+  const { populateBooks, loading } = useBooks();
 
   const handleClick = (event) => {
     setModal(true);
@@ -29,7 +29,6 @@ export default function Header({ children }) {
     event.preventDefault();
 
     if (sync.isInit()) {
-      setLoading(true);
       sync.syncNow(false)
         .then(() => getAll().then(populateBooks))
         .catch((error) => {
@@ -39,8 +38,7 @@ export default function Header({ children }) {
           else {
             console.error(error);
           }
-        })
-        .finally(() => setLoading(false));
+        });
     }
   };
   const handleLogin = (event) => {
