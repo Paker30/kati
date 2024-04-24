@@ -17,7 +17,7 @@ export default function Header({ children }) {
   const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [_, pushLocation] = useLocation();
-  const { populateBooks, loading } = useBooks();
+  const { populateBooks, loading, dispatch, ACTIONS } = useBooks();
 
   const handleClick = (event) => {
     setModal(true);
@@ -29,9 +29,16 @@ export default function Header({ children }) {
     event.preventDefault();
 
     if (sync.isInit()) {
+      dispatch({
+        type: ACTIONS.START_ADDING_BOOKS
+      });
       sync.syncNow(false)
         .then(() => getAll().then(populateBooks))
         .catch((error) => {
+          dispatch({
+            type: ACTIONS.ERROR_ADDING_BOOKS,
+            error: error
+          });
           if (error.name === "RequestError" && error.code === 401) {
             console.error('Bad credentials');
           }
@@ -53,20 +60,24 @@ export default function Header({ children }) {
           ＋
         </span>
       </button>
-      {!loading && <button className='btn' onClick={handleSynchronize} disabled={isEmpty(credentials)}>
+      {<button className='btn' onClick={handleSynchronize} disabled={isEmpty(credentials)}>
         <span aria-label="Synchronize remote book list" role="img">
           🔁
         </span>
       </button>}
-      {loading && <span>
-        Synchronizing
-      </span>
-      }
       <button className='btn' onClick={handleLogin}>
         <span aria-label="Add book to list" role="img">
           Login
         </span>
-      </button>)
+      </button>
+      {loading &&
+        <div className='synchronize'>
+          <span>
+            Synchronizing
+          </span>
+          <div class="spinner"></div>
+        </div>
+      }
       {showModal && (
         <Modal onClose={handleClose}>
           <New />
