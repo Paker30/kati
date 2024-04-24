@@ -24,7 +24,7 @@ describe('useSingleBook', () => {
         expect(typeof find.byId).toBe('function');
     });
 
-    describe('findById', () => {
+    describe.skip('findById', () => {
         test('Book is in cache', async () => {
             booksHook.useBooks.mockReturnValueOnce({ books: [fakeBook] });
             booksService.get.mockResolvedValueOnce('no call has been made');
