@@ -62,7 +62,7 @@ export default function Header({ children }) {
       </button>
       {<button className='btn' onClick={handleSynchronize} disabled={isEmpty(credentials)}>
         <span aria-label="Synchronize remote book list" role="img">
-          🔁
+          Sync
         </span>
       </button>}
       <button className='btn' onClick={handleLogin}>
@@ -75,7 +75,7 @@ export default function Header({ children }) {
           <span>
             Synchronizing
           </span>
-          <div class="spinner"></div>
+          <div className="spinner"></div>
         </div>
       }
       {showModal && (

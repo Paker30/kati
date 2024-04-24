@@ -23,10 +23,14 @@
 }
 
 .synchronize {
+    padding: .5rem 1rem;
+    font-size: 1rem;
     display: flex;
     color: black;
     align-items: center;
-    margin: 1rem;
+    span {
+        padding-right: 1rem
+    }
 }
 
 .spinner {
