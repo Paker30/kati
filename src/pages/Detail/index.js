@@ -23,12 +23,8 @@ export default function Detail({ params }) {
     return (
         <>
             <BookDetail {...book} remove={() => {
-                debugger;
                 remove(book)
-                    .then(({ id, rev }) => {
-                        debugger;
-                        sync.delete(id);
-            })
+                    .then(({ id, rev }) => sync.delete(id))
             }
             } />
         </>

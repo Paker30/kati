@@ -26,8 +26,7 @@ const sync = dbToCloud({
             .catch(() => insert(remove('_rev')(book)))
     },
     onDelete: (id) => {
-        debugger;
-        return sync.delete(id)
+        return sync.delete(id);
     },
     getState: async (drive) => {
         try {
