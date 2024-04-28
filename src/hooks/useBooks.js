@@ -1,5 +1,5 @@
 import { useContext, useCallback } from 'react';
-import { getAll, insert, getBy, update } from '../services/books';
+import { getAll, insert, getBy, update, remove } from '../services/books';
 import BooksContext, { ACTIONS } from '../context/books';
 
 const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
@@ -56,6 +56,27 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
             });
     }, [books, dispatch]);
 
+    const removeBook = useCallback((book) => {
+        dispatch({
+            type: ACTIONS.START_ADDING_BOOKS
+        });
+        return remove(book)
+            .then(() => {
+                const index = books.findIndex(({ _id }) => _id === book._id)
+                dispatch({
+                    type: ACTIONS.END_ADDING_BOOKS,
+                    payload: books.toSpliced(index, 1)
+                });
+                return book;
+            })
+            .catch((error) => {
+                console.error(error);
+                dispatch({
+                    type: ACTIONS.ERROR_ADDING_BOOKS,
+                });
+            });
+    }, [books, dispatch]);
+
     const populateBooks = useCallback((books) => dispatch({
         type: ACTIONS.END_ADDING_BOOKS,
         payload: books.map(formatBook)
@@ -88,5 +109,5 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
             });
     }, [dispatch, books]);
 
-    return { loading, books, addBook, populateBooks, setRead, loadBooks, ACTIONS, dispatch };
+    return { loading, books, addBook, removeBook, populateBooks, setRead, loadBooks, ACTIONS, dispatch };
 };

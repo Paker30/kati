@@ -3,7 +3,7 @@ import { useBooks } from 'hooks/useBooks';
 import { get } from 'services/books';
 
 export default function useSingleBook() {
-    const { books } = useBooks();
+    const { books, removeBook } = useBooks();
 
     const [book, setBook] = useState();
     const [isLoading, setIsLoading] = useState(false);
@@ -27,5 +27,5 @@ export default function useSingleBook() {
         }
     };
 
-    return { book, isLoading, find: { byId: findById } };
+    return { book, remove: removeBook, isLoading, find: { byId: findById } };
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Detail.css';
 
-export default function BookDetail({ author, title, isReaded }) {
+export default function BookDetail({ author, title, isReaded, remove }) {
 
   return (
     <div className="BookDetails">
@@ -16,6 +16,11 @@ export default function BookDetail({ author, title, isReaded }) {
       <section className="BookDetails-body">
         <span>Author: {author}</span>
       </section>
+      <footer>
+        <button onClick={remove}>
+          <span>🪣</span>
+        </button>
+      </footer>
     </div>
   )
 }
