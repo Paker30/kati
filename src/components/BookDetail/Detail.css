@@ -21,3 +21,11 @@
     flex-direction: column;
     align-items: flex-start;
 }
+
+.Book-footer {
+    align-self: flex-start;
+}
+
+.Book-footer button{
+    background-color: transparent;
+}

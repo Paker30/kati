@@ -15,6 +15,8 @@ const getByTitle = ({ keyword }) => db.find({selector: { title: {$regex: keyword
 
 export const insert = (book) => db.put({ ...book, _id: book.id, updated: book.updated || new Date().getTime() });
 
+export const remove = (book) => db.remove(book);
+
 export const get = db.get;
 
 export const update = db.put;

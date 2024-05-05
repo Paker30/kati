@@ -25,6 +25,9 @@ const sync = dbToCloud({
             .then((localeBook) => update({...localeBook, author: book.author, isRead: book.isRead, title: book.title}))
             .catch(() => insert(remove('_rev')(book)))
     },
+    onDelete: (id) => {
+        return sync.delete(id);
+    },
     getState: async (drive) => {
         try {
             return JSON.parse(localStorage.getItem(`cloudSync/${drive.name}/state`));

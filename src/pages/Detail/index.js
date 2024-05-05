@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import useSingleBook from 'hooks/useSingleBook';
+import useRemote from 'hooks/useRemote';
 import BookDetail from 'components/BookDetail';
 
 export default function Detail({ params }) {
-    const { book, isLoading, find } = useSingleBook();
+    const { book, isLoading, find, remove } = useSingleBook();
+    const { sync } = useRemote();
 
     useEffect(() => {
         find.byId(params.id);
@@ -20,7 +22,11 @@ export default function Detail({ params }) {
 
     return (
         <>
-            <BookDetail {...book} />
+            <BookDetail {...book} remove={() => {
+                remove(book)
+                    .then(({ id, rev }) => sync.delete(id))
+            }
+            } />
         </>
     )
 }
