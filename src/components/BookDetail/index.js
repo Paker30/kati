@@ -16,8 +16,8 @@ export default function BookDetail({ author, title, isReaded, remove }) {
       <section className="BookDetails-body">
         <span>Author: {author}</span>
       </section>
-      <footer>
-        <button onClick={remove}>
+      <footer className="Book-footer">
+        <button onClick={remove} className='btn'>
           <span>🪣</span>
         </button>
       </footer>
