@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useBooks } from 'hooks/useBooks';
 import { nanoid } from 'nanoid';
 import useRemote from 'hooks/useRemote';
-import useModal from 'hooks/useModal';
+// import useModal from 'hooks/useModal';
+import {useData} from 'hooks/useData';
+import {useAPI} from 'hooks/useAPI';
 
 import './Add.css';
 
