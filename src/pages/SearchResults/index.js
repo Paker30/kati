@@ -1,9 +1,12 @@
-import React from 'react';
-import SearchForm from 'components/SearchForm';
-import ListOfBooks from 'components/ListOfBooks';
+import React, { memo } from 'react';
+import { SearchForm } from 'components/SearchForm';
+import { ListOfBooks } from 'components/ListOfBooks';
 import { useBooks } from 'hooks/useBooks';
 
-export default function SearchResults({ params }) {
+const MemoizedListOfBooks = memo(ListOfBooks);
+const MemoizedSearchForm = memo(SearchForm);
+
+export const SearchResults = ({ params }) => {
 
     const { keyword, category } = params;
     const { books } = useBooks({ keyword: decodeURIComponent(keyword), category });
@@ -11,11 +14,13 @@ export default function SearchResults({ params }) {
     return (
         <>
             <header>
-                <SearchForm initialKeyword={keyword} initialCategory={category} />
+                <MemoizedSearchForm initialKeyword={keyword} initialCategory={category} />
             </header>
             <div>
-                <ListOfBooks books={books} />
+                <MemoizedListOfBooks books={books} />
             </div>
         </>
     )
-}
+};
+
+export default SearchResults;

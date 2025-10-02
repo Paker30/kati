@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import useSingleBook from './useSingleBook';
-import { BooksContextProvider } from '../context/books';
+import { KatiContextProvider } from '../context/kati';
 import * as booksService from '../services/books';
 import * as booksHook from '../hooks/useBooks';
 jest.mock('../hooks/useBooks');

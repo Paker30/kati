@@ -1,9 +1,7 @@
 import React from 'react';
 import './Detail.css';
 
-export default function BookDetail({ author, title, isReaded, remove }) {
-
-  return (
+export const BookDetail = ({ author, title, isReaded, remove }) => (
     <div className="BookDetails">
       <header>
         <h3>{title}</h3>
@@ -22,5 +20,4 @@ export default function BookDetail({ author, title, isReaded, remove }) {
         </button>
       </footer>
     </div>
-  )
-}
+);

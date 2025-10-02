@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useLocation } from "wouter";
 import './Header.css';
 import Modal from 'components/Modal';
@@ -13,32 +13,21 @@ const isEmpty = (obj) => Object.keys(obj).length === 0;
 
 export default function Header({ children }) {
 
-  const { showModal, setModal } = useModal();
+  const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [_, pushLocation] = useLocation();
-  const { populateBooks, loading, dispatch, ACTIONS } = useBooks();
+  const { loading, populateBooks, startAddingBook, errorAddingBook } = useBooks();
 
-  const handleClick = (event) => {
-    setModal(true);
-  };
-  const handleClose = () => {
-    setModal(false);
-  };
   const handleSynchronize = (event) => {
     event.preventDefault();
 
     if (sync.isInit()) {
-      dispatch({
-        type: ACTIONS.START_ADDING_BOOKS
-      });
+      startAddingBook();
       sync.syncNow(false)
         .then(() => getAll().then(populateBooks))
         .catch((error) => {
-          dispatch({
-            type: ACTIONS.ERROR_ADDING_BOOKS,
-            error: error
-          });
+          errorAddingBook(error);
           if (error.name === "RequestError" && error.code === 401) {
             console.error('Bad credentials');
           }
@@ -55,7 +44,7 @@ export default function Header({ children }) {
 
   return (
     <header className='gf-header'>
-      <button className='btn' onClick={handleClick}>
+      <button className='btn' onClick={openModal}>
         <span aria-label="Add book to list" role="img">
           ＋
         </span>
@@ -79,7 +68,7 @@ export default function Header({ children }) {
         </div>
       }
       {showModal && (
-        <Modal onClose={handleClose}>
+        <Modal onClose={closeModal}>
           <New />
         </Modal>
       )}

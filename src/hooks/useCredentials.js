@@ -1,8 +1,10 @@
-import { useContext } from 'react';
-import UserContext from '../context/credentials';
+import { useAPI } from './useAPI';
+import { useData } from './useData';
+
 
 export default function useCredentials () {
-    const { credentials, setCredentials } = useContext(UserContext);
+    const { credentials } = useData();
+    const { setCredentials } = useAPI();
 
     return { credentials, setCredentials };
 };

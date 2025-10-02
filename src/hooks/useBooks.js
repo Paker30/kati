@@ -1,6 +1,7 @@
-import { useContext, useCallback } from 'react';
+import { useCallback } from 'react';
 import { getAll, insert, getBy, update, remove } from '../services/books';
-import BooksContext, { ACTIONS } from '../context/books';
+import {useData} from 'hooks/useData';
+import {useAPI} from 'hooks/useAPI';
 
 const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
 const mergeBooks = (books) => (newBook) => {
@@ -11,82 +12,57 @@ const mergeBooks = (books) => (newBook) => {
 };
 
 export const useBooks = ({ keyword, category } = { keyword: null }) => {
-    const { books, isLoading: loading, dispatch } = useContext(BooksContext);
+    const { books, isLoading: loading} = useData();
+    const { startAddingBook, endAddingBook, errorAddingBook } = useAPI();
 
     const keywordToUse = keyword || localStorage.getItem('lastKeyword');
 
-    const loadBooks = () => {
-        dispatch({
-            type: ACTIONS.START_ADDING_BOOKS
-        });
+    const loadBooks = useCallback(() => {
+        startAddingBook();
         const query = category ? getBy[category]({ keyword: keywordToUse }) : getAll();
         query
             .then((books) => {
-                dispatch({
-                    type: ACTIONS.END_ADDING_BOOKS,
-                    payload: books.map(formatBook)
-                });
+                endAddingBook(books.map(formatBook));
                 localStorage.setItem('lastKeyword', keyword)
             })
             .catch((error) => {
                 console.error(error);
-                dispatch({
-                    type: ACTIONS.ERROR_ADDING_BOOKS,
-                });
+                errorAddingBook(error);
             });
-    };
+    }, [category, endAddingBook, errorAddingBook, keywordToUse, startAddingBook, keyword]);
 
     const addBook = useCallback((book) => {
-        dispatch({
-            type: ACTIONS.START_ADDING_BOOKS
-        });
+        startAddingBook();
         return insert(book)
             .then((added) => {
-                dispatch({
-                    type: ACTIONS.END_ADDING_BOOKS,
-                    payload: [...books, book]
-                });
+                endAddingBook([...books, book]);
                 return added;
             })
             .catch((error) => {
                 console.error(error);
-                dispatch({
-                    type: ACTIONS.ERROR_ADDING_BOOKS,
-                });
+                errorAddingBook(error);
             });
-    }, [books, dispatch]);
+    }, [books, endAddingBook, errorAddingBook, startAddingBook]);
 
     const removeBook = useCallback((book) => {
-        dispatch({
-            type: ACTIONS.START_ADDING_BOOKS
-        });
+        startAddingBook();
         return remove(book)
             .then(() => {
                 const index = books.findIndex(({ _id }) => _id === book._id)
-                dispatch({
-                    type: ACTIONS.END_ADDING_BOOKS,
-                    payload: books.toSpliced(index, 1)
-                });
+                endAddingBook(books.toSpliced(index, 1));
                 return book;
             })
             .catch((error) => {
                 console.error(error);
-                dispatch({
-                    type: ACTIONS.ERROR_ADDING_BOOKS,
-                });
+                errorAddingBook(error);
             });
-    }, [books, dispatch]);
+    }, [books, errorAddingBook, startAddingBook, endAddingBook]);
 
-    const populateBooks = useCallback((books) => dispatch({
-        type: ACTIONS.END_ADDING_BOOKS,
-        payload: books.map(formatBook)
-    }), [dispatch]);
+    const populateBooks = useCallback((books) => endAddingBook(books.map(formatBook)), [endAddingBook]);
 
     const setRead = useCallback((id) => {
         const book = books.find((book) => book.id === id);
-        dispatch({
-            type: ACTIONS.START_ADDING_BOOKS
-        });
+        startAddingBook();
         return update({ ...book, isRead: !book.isRead })
             .then((updated) => {
                 const updatedBooks = books.map((book) => {
@@ -95,19 +71,14 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
                     }
                     return book;
                 });
-                dispatch({
-                    type: ACTIONS.END_ADDING_BOOKS,
-                    payload: updatedBooks
-                });
+                endAddingBook(updatedBooks);
                 return updated;
             })
             .catch((error) => {
                 console.error(error);
-                dispatch({
-                    type: ACTIONS.ERROR_ADDING_BOOKS,
-                });
+                errorAddingBook(error);
             });
-    }, [dispatch, books]);
+    }, [startAddingBook, endAddingBook, errorAddingBook, books]);
 
-    return { loading, books, addBook, removeBook, populateBooks, setRead, loadBooks, ACTIONS, dispatch };
+    return { loading, books, addBook, removeBook, populateBooks, setRead, loadBooks };
 };
