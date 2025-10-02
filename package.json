@@ -67,7 +67,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "jest --ci",
-    "test:development": "node scripts/test.js"
+    "test:development": "node scripts/test.js",
+    "eslint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [
@@ -153,10 +154,5 @@
       "jest-watch-typeahead/testname"
     ],
     "resetMocks": true
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
   }
 }
