@@ -7,7 +7,7 @@ import useForm from './hook';
 const CATEGORIES = ['author', 'title'];
 
 
-export default function SearchForm({ initialKeyword = '', initialCategory = CATEGORIES[1] }) {
+export const SearchForm =({ initialKeyword = '', initialCategory = CATEGORIES[1] }) => {
 
     const [_, pushLocation] = useLocation();
 
@@ -43,4 +43,4 @@ export default function SearchForm({ initialKeyword = '', initialCategory = CATE
             </select>
         </form>
     )
-}
+};

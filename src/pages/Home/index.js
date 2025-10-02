@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import ListOfBooks from 'components/ListOfBooks';
+import React, { useEffect, memo } from 'react'
+import { ListOfBooks } from 'components/ListOfBooks';
 import { useBooks } from 'hooks/useBooks';
-import SearchForm from 'components/SearchForm';
+import { SearchForm } from 'components/SearchForm';
 
-export default function Home() {
+const MemoizedListOfBooks = memo(ListOfBooks);
+const MemoizedSearchForm = memo(SearchForm);
 
+const Home = () => {
   const { books, loadBooks } = useBooks();
-  const [listOfBooks, setListOfBooks] = useState(books);
 
   useEffect(() => {
     loadBooks();
   }, []);
 
-  useEffect(() => {
-    setListOfBooks(books);
-  }, [books]);
-
   return (
     <>
       <header>
-        <SearchForm />
+        <MemoizedSearchForm />
       </header>
       <div>
-        <ListOfBooks books={listOfBooks} />
+        <MemoizedListOfBooks books={books} />
       </div>
     </>
   )
-}
+};
+
+export default Home;

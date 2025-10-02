@@ -4,7 +4,7 @@ import useRemote from 'hooks/useRemote';
 import { useBooks } from 'hooks/useBooks';
 import './Book.css';
 
-export default function Book({ title, author, isRead, id }) {
+export const Book = ({ title, author, isRead, id }) => {
 
   const { sync } = useRemote();
   const { setRead } = useBooks();
@@ -28,4 +28,4 @@ export default function Book({ title, author, isRead, id }) {
       }
     </div>
   )
-}
+};
