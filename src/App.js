@@ -4,9 +4,7 @@ import Header from 'components/Header';
 import Detail from 'pages/Detail';
 import SearchResults from 'pages/SearchResults';
 import Accounts from 'pages/Accounts';
-import { BooksContextProvider } from 'context/books';
-import { CredentialsContextProvider } from 'context/credentials';
-import { ModalContextProvider } from 'context/modal';
+import { KatiContextProvider } from 'context/kati';
 import './App.css';
 import packageInfo from '../package.json';
 
@@ -17,9 +15,7 @@ function App() {
     <div className="App">
       <Suspense fallback={null}>
         <section className='App-content'>
-          <BooksContextProvider>
-            <ModalContextProvider>
-              <CredentialsContextProvider>
+          <KatiContextProvider>
                 <Header>
                   <Link to="/">
                     <h1>KATI</h1>
@@ -32,9 +28,7 @@ function App() {
                   <Route component={SearchResults} path="/search/:keyword/:category" />
                   <Route component={Accounts} path="/login" />
                 </Switch>
-              </CredentialsContextProvider>
-            </ModalContextProvider>
-          </BooksContextProvider>
+          </KatiContextProvider>
         </section>
       </Suspense>
     </div>

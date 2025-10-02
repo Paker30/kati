@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useMemo } from 'react';
 
 const Context = React.createContext({});
 export const ContextData = React.createContext({});
@@ -29,13 +29,17 @@ const ACTIONS_REDUCERS = {
         books: [],
         error: payload
     }),
-    [ACTIONS.SHOW_MODAL]: (state, { payload }) => ({
+    [ACTIONS.SHOW_MODAL]: (state) => ({
         ...state,
         showModal: true
     }),
-    [ACTIONS.HIDE_MODAL]: (state, { payload }) => ({
+    [ACTIONS.HIDE_MODAL]: (state) => ({
         ...state,
         showModal: false
+    }),
+    [ACTIONS.SET_CREDENTIALS]: (state, { payload }) => ({
+        ...state,
+        credentials: payload
     })
 };
 
@@ -44,7 +48,7 @@ const reducer = (state, action) => {
     return actionReducer ? actionReducer(state, action) : state;
 };
 
-export const BooksContextProvider = ({ children }) => {
+export const KatiContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, {
         books: [],
         isLoading: false,
@@ -61,7 +65,11 @@ export const BooksContextProvider = ({ children }) => {
 
     const API = useMemo(() => ({
         openModal: () => dispatch({ type: ACTIONS.SHOW_MODAL }),
-        closeModal: () => dispatch({ type: ACTIONS.HIDE_MODAL })
+        closeModal: () => dispatch({ type: ACTIONS.HIDE_MODAL }),
+        startAddingBook: () => dispatch({ type: ACTIONS.START_ADDING_BOOKS }),
+        endAddingBook: (books) => dispatch({ type: ACTIONS.END_ADDING_BOOKS, payload: books }),
+        errorAddingBook: (error) => dispatch({ type: ACTIONS.ERROR_ADDING_BOOKS, payload: error }),
+        setCredentials: (credentials) => dispatch({ type: ACTIONS.SET_CREDENTIALS, payload: credentials }),
     }), []);
 
     return <ContextData.Provider value={data}>

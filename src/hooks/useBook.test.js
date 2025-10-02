@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { useBooks } from './useBooks';
-import { BooksContextProvider } from '../context/books';
+import { KatiContextProvider } from '../context/kati';
 import * as booksService from '../services/books';
 
 jest.mock('../services/books');
@@ -14,7 +14,7 @@ describe('useBooks', () => {
         title: 'The Hitchhiker\'s Guide to the Galaxy'
     };
     test('Init hook', () => {
-        const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+        const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
         const { result } = renderHook(() => useBooks(), { wrapper });
         const { loading, books, setRead, addBook, populateBooks, loadBooks, removeBook } = result.current;
         expect(loading).toBe(false);
@@ -30,7 +30,7 @@ describe('useBooks', () => {
     describe('getAll', () => {
         test('There are no books', async () => {
             booksService.getAll.mockResolvedValueOnce([]);
-            const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+            const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
             const { result } = renderHook(() => useBooks(), { wrapper });
             await waitFor(() => result.current.loadBooks());
             expect(result.current.loading).toBe(false);
@@ -40,7 +40,7 @@ describe('useBooks', () => {
 
         test('There are books', async () => {
             booksService.getAll.mockResolvedValueOnce([fakeBook]);
-            const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+            const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
             const { result } = renderHook(() => useBooks(), { wrapper });
             await waitFor(() => result.current.loadBooks());
             expect(result.current.loading).toBe(false);
@@ -50,7 +50,7 @@ describe('useBooks', () => {
 
         test('There was an error', async () => {
             booksService.getAll.mockRejectedValueOnce(new Error('Oppps, something has gone wrong!'));
-            const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+            const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
             const { result } = renderHook(() => useBooks(), { wrapper });
             await waitFor(() => result.current.loadBooks());
             expect(result.current.loading).toBe(false);
@@ -62,7 +62,7 @@ describe('useBooks', () => {
     describe('addBook', () => {
         test('Add one book', async () => {
             booksService.insert.mockResolvedValueOnce(true);
-            const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+            const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
             const { result } = renderHook(() => useBooks(), { wrapper });
             await waitFor(() => result.current.addBook(fakeBook));
             expect(result.current.loading).toBe(false);
@@ -72,7 +72,7 @@ describe('useBooks', () => {
 
         test('There was an error', async () => {
             booksService.insert.mockRejectedValueOnce(new Error('Oppps, something has gone wrong!'));
-            const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+            const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
             const { result } = renderHook(() => useBooks(), { wrapper });
             await waitFor(() => result.current.addBook({ id: '', key: '', doc: '', author: '', title: '' }));
             expect(result.current.loading).toBe(false);
@@ -85,7 +85,7 @@ describe('useBooks', () => {
         test('Set book as unread', async () => {
             booksService.insert.mockResolvedValueOnce(true);
             booksService.update.mockResolvedValueOnce(true);
-            const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+            const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
             const { result } = renderHook(() => useBooks(), { wrapper });
             await waitFor(() => result.current.addBook({...fakeBook, isRead: true}));
             expect(result.current.books.length).toBe(1);
@@ -97,7 +97,7 @@ describe('useBooks', () => {
         test('Set book as read', async () => {
             booksService.insert.mockResolvedValueOnce(true);
             booksService.update.mockResolvedValueOnce({rev: '123'});
-            const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+            const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
             const { result } = renderHook(() => useBooks(), { wrapper });
             await waitFor(() => result.current.addBook({...fakeBook, isRead: false}));
             expect(result.current.books.length).toBe(1);
@@ -111,7 +111,7 @@ describe('useBooks', () => {
         test('Book is removed', async () => {
             booksService.getAll.mockResolvedValueOnce([fakeBook]);
             booksService.remove.mockResolvedValueOnce(true);
-            const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+            const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
             const { result } = renderHook(() => useBooks(), { wrapper });
             await waitFor(() => result.current.loadBooks());
             expect(result.current.books.length).toBe(1);
@@ -122,7 +122,7 @@ describe('useBooks', () => {
         test('Removing book fails', async () => {
             booksService.getAll.mockResolvedValueOnce([fakeBook]);
             booksService.remove.mockRejectedValueOnce(new Error('Oppps something went wrong!'));
-            const wrapper = ({ children }) => <BooksContextProvider>{children}</BooksContextProvider>
+            const wrapper = ({ children }) => <KatiContextProvider>{children}</KatiContextProvider>
             const { result } = renderHook(() => useBooks(), { wrapper });
             await waitFor(() => result.current.loadBooks());
             expect(result.current.books.length).toBe(1);

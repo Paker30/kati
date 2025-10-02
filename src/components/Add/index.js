@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { useBooks } from 'hooks/useBooks';
 import { nanoid } from 'nanoid';
 import useRemote from 'hooks/useRemote';
-// import useModal from 'hooks/useModal';
-import {useData} from 'hooks/useData';
-import {useAPI} from 'hooks/useAPI';
+import useModal from 'hooks/useModal';
 
 import './Add.css';
 
 
 export default function Add() {
-    const { showModal, setModal } = useModal();
+    const { closeModal } = useModal();
     const { sync } = useRemote();
     const [author, setAuthor] = useState('');
     const [title, setTitle] = useState('');
@@ -20,7 +18,7 @@ export default function Add() {
         e.preventDefault();
         addBook({ author, title, id: nanoid(), isRead: false })
             .then(({ id, rev }) => sync.put(id, rev))
-            .finally(() => setModal(false));
+            .finally(() => closeModal());
     };
 
     return (
