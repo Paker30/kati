@@ -17,7 +17,7 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
 
     const keywordToUse = keyword || localStorage.getItem('lastKeyword');
 
-    const loadBooks = () => {
+    const loadBooks = useCallback(() => {
         startAddingBook();
         const query = category ? getBy[category]({ keyword: keywordToUse }) : getAll();
         query
@@ -29,7 +29,7 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
                 console.error(error);
                 errorAddingBook(error);
             });
-    };
+    }, [category, endAddingBook, errorAddingBook, keywordToUse, startAddingBook, keyword]);
 
     const addBook = useCallback((book) => {
         startAddingBook();
