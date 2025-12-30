@@ -65,10 +65,10 @@
     "wouter": "^2.8.0-alpha.2"
   },
   "scripts": {
-    "dev": "vite",
+    "vite:dev": "vite",
     "preview": "vite preview",
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "vite build",
     "test": "jest --ci",
     "test:development": "node scripts/test.js",
     "eslint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"
@@ -98,6 +98,8 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^16.0.1",
+    "@vitejs/plugin-react": "^5.0.4",
+    "baseline-browser-mapping": "^2.9.11",
     "path-browserify": "^1.0.1",
     "vite": "^7.1.8",
     "web-vitals": "^2.1.4"
