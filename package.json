@@ -68,7 +68,7 @@
     "vite:dev": "vite",
     "preview": "vite preview",
     "start": "node scripts/start.js",
-    "build": "vite build",
+    "build": "vite build --emptyOutDir",
     "test": "jest --ci",
     "test:development": "node scripts/test.js",
     "eslint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"

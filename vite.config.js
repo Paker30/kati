@@ -16,7 +16,7 @@ const defineConfig = ({ mode }) => {
       global: {}
     },
     build: {
-      outDir: '../build',
+      outDir: 'build',
       sourcemap: true,
       minify: 'esbuild',
       target: 'esnext',
