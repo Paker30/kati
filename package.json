@@ -65,9 +65,8 @@
     "wouter": "^2.8.0-alpha.2"
   },
   "scripts": {
-    "vite:dev": "vite",
+    "start": "vite",
     "preview": "vite preview",
-    "start": "node scripts/start.js",
     "build": "vite build --emptyOutDir",
     "test": "jest --ci",
     "test:development": "node scripts/test.js",
