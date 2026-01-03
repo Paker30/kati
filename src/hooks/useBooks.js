@@ -80,5 +80,5 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
             });
     }, [startAddingBook, endAddingBook, errorAddingBook, books]);
 
-    return { loading, books, addBook, removeBook, populateBooks, setRead, loadBooks };
+    return { loading, books, addBook, removeBook, populateBooks, setRead, loadBooks, startAddingBook, errorAddingBook };
 };
