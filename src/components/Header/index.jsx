@@ -49,16 +49,16 @@ export default function Header({ children }) {
           ＋
         </span>
       </button>
-      {<button className='btn' onClick={handleSynchronize} disabled={isEmpty(credentials)}>
+      {isEmpty(credentials) &&<button className='btn' onClick={handleSynchronize}>
         <span aria-label="Synchronize remote book list" role="img">
           Sync
         </span>
       </button>}
-      <button className='btn' onClick={handleLogin}>
+      {!isEmpty(credentials) && <button className='btn' onClick={handleLogin}>
         <span aria-label="Add book to list" role="img">
           Login
         </span>
-      </button>
+      </button>}
       {loading &&
         <div className='synchronize'>
           <span>
