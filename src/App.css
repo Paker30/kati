@@ -33,6 +33,22 @@
   cursor: pointer;
 }
 
+.fade-in {
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  animation-timing-function: ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media screen and (min-width: 55rem) {
   .App {
     font-size: var(--large-fz);
