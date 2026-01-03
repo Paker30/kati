@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Book } from 'components/Book';
+import { Book } from '../../components/Book';
 import './ListOfBooks.css';
 
 const MemoizedBook = memo(Book);

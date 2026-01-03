@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useBooks } from 'hooks/useBooks';
-import { get } from 'services/books';
+import { useBooks } from './useBooks';
+import { get } from '../services/books';
 
 export default function useSingleBook() {
     const { books, removeBook } = useBooks();

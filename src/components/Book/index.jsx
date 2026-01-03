@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'wouter';
-import useRemote from 'hooks/useRemote';
-import { useBooks } from 'hooks/useBooks';
+import useRemote from '../../hooks/useRemote';
+import { useBooks } from '../../hooks/useBooks';
 import './Book.css';
 
 export const Book = ({ title, author, isRead, id }) => {

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { getAll, insert, getBy, update, remove } from '../services/books';
-import {useData} from 'hooks/useData';
-import {useAPI} from 'hooks/useAPI';
+import {useData} from './useData';
+import {useAPI} from './useAPI';
 
 const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
 const mergeBooks = (books) => (newBook) => {

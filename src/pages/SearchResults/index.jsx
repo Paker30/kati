@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
-import { SearchForm } from 'components/SearchForm';
-import { ListOfBooks } from 'components/ListOfBooks';
-import { useBooks } from 'hooks/useBooks';
+import { SearchForm } from '../../components/SearchForm';
+import { ListOfBooks } from '../../components/ListOfBooks';
+import { useBooks } from '../../hooks/useBooks';
 
 const MemoizedListOfBooks = memo(ListOfBooks);
 const MemoizedSearchForm = memo(SearchForm);

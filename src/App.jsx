@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 import { Link, Switch, Route } from 'wouter';
-import Header from 'components/Header';
-import Detail from 'pages/Detail';
-import SearchResults from 'pages/SearchResults';
-import Accounts from 'pages/Accounts';
-import { KatiContextProvider } from 'context/kati';
+import Header from './components/Header';
+import Detail from './pages/Detail';
+import SearchResults from './pages/SearchResults';
+import Accounts from './pages/Accounts';
+import { KatiContextProvider } from './context/kati';
 import './App.css';
 import packageInfo from '../package.json';
 
