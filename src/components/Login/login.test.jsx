@@ -12,7 +12,7 @@ vi.mock('wouter', () => ({
 }));
 vi.mock('@react-oauth/google');
 vi.mock('../../hooks/useCredentials', () => ({
-    default: () => ({
+    useCredentials: () => ({
     credentials: mockCredentials,
     setCredentials: mockSetCredentials
 })

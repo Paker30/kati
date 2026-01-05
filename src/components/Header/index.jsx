@@ -1,12 +1,12 @@
 import React from 'react';
 import { useLocation } from "wouter";
 import './Header.css';
-import Modal from '../Modal';
-import New from '../../pages/New';
-import useRemote from '../../hooks/useRemote';
-import useCredentials from '../../hooks/useCredentials';
+import { ModalPortal } from '../Modal';
+import { New } from '../../pages/New';
+import { useRemote } from '../../hooks/useRemote';
+import { useCredentials } from '../../hooks/useCredentials';
 import { useBooks } from '../../hooks/useBooks';
-import useModal from '../../hooks/useModal';
+import { useModal } from '../../hooks/useModal';
 import { getAll } from '../../services/books';
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
@@ -68,9 +68,9 @@ export const Header = ({ children }) => {
         </div>
       }
       {showModal && (
-        <Modal onClose={closeModal}>
+        <ModalPortal onClose={closeModal}>
           <New />
-        </Modal>
+        </ModalPortal>
       )}
       <section className='children'>
         {children}

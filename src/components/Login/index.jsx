@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { useGoogleLogin  } from '@react-oauth/google';
-import useCredentials from '../../hooks/useCredentials';
+import { useGoogleLogin } from '@react-oauth/google';
+import { useCredentials } from '../../hooks/useCredentials';
 
 export default function Login() {
 

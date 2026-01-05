@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import useCredentials from './useCredentials';
+import { useCredentials } from './useCredentials';
 import { drive, sync } from '../services/dbCloud';
 
-export default function useRemote() {
+export const useRemote = () => {
     const { credentials } = useCredentials();
 
     useEffect(() => {

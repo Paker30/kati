@@ -7,7 +7,7 @@ const mockPut = vi.fn(() => true);
 const mockSetRead = vi.fn();
 
 vi.mock('../../hooks/useRemote', () => ({
-    default: () =>  ({sync: { put: mockPut }})
+    useRemote: () =>  ({sync: { put: mockPut }})
 }));
 vi.mock('../../hooks/useBooks', () => ({
     useBooks: () => ({ setRead: mockSetRead})

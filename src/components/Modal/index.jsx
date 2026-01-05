@@ -13,7 +13,7 @@ const Modal = ({ children, onClose }) => {
   )
 };
 
-const ModalPortal = ({ children, onClose }) => {
+export const ModalPortal = ({ children, onClose }) => {
     return ReactDom.createPortal(
         <Modal onClose={onClose}>
             {children}
@@ -21,5 +21,3 @@ const ModalPortal = ({ children, onClose }) => {
         document.getElementById('root')
     )
 };
-
-export default ModalPortal;

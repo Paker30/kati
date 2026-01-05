@@ -1,11 +1,9 @@
 import React from 'react';
-import Add from '../../components/Add';
+import { Add } from '../../components/Add';
 
-export default function New() {
-    return (
+export const New = () => (
         <>
             <h2>New book</h2>
             <Add />
         </>
-    )
-}
+    );

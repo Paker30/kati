@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Link, Switch, Route } from 'wouter';
-import Header from './components/Header';
+import {Header} from './components/Header';
 import Detail from './pages/Detail';
 import SearchResults from './pages/SearchResults';
 import Accounts from './pages/Accounts';
