@@ -11,7 +11,7 @@ import { getAll } from '../../services/books';
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-export default function Header({ children }) {
+export const Header = ({ children }) => {
 
   const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
