@@ -49,7 +49,7 @@
   }
 }
 
-@media screen and (min-width: 55rem) {
+@media screen and (min-width: var(--mobile)) {
   .App {
     font-size: var(--large-fz);
   }
