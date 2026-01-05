@@ -1,5 +1,5 @@
 import React from 'react';
-import useCredentials from '../../hooks/useCredentials';
+import { useCredentials } from '../../hooks/useCredentials';
 
 export default function Login() {
 

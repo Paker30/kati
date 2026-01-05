@@ -1,17 +1,17 @@
 import React from 'react';
 import { useLocation } from "wouter";
 import './Header.css';
-import Modal from '../Modal';
-import New from '../../pages/New';
-import useRemote from '../../hooks/useRemote';
-import useCredentials from '../../hooks/useCredentials';
+import { ModalPortal } from '../Modal';
+import { New } from '../../pages/New';
+import { useRemote } from '../../hooks/useRemote';
+import { useCredentials } from '../../hooks/useCredentials';
 import { useBooks } from '../../hooks/useBooks';
-import useModal from '../../hooks/useModal';
+import { useModal } from '../../hooks/useModal';
 import { getAll } from '../../services/books';
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-export default function Header({ children }) {
+export const Header = ({ children }) => {
 
   const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
@@ -49,16 +49,16 @@ export default function Header({ children }) {
           ＋
         </span>
       </button>
-      {<button className='btn' onClick={handleSynchronize} disabled={isEmpty(credentials)}>
+      {!isEmpty(credentials) &&<button className='btn fade-in' onClick={handleSynchronize}>
         <span aria-label="Synchronize remote book list" role="img">
           Sync
         </span>
       </button>}
-      <button className='btn' onClick={handleLogin}>
+      {isEmpty(credentials) && <button className='btn' onClick={handleLogin}>
         <span aria-label="Add book to list" role="img">
           Login
         </span>
-      </button>
+      </button>}
       {loading &&
         <div className='synchronize'>
           <span>
@@ -68,9 +68,9 @@ export default function Header({ children }) {
         </div>
       }
       {showModal && (
-        <Modal onClose={closeModal}>
+        <ModalPortal onClose={closeModal}>
           <New />
-        </Modal>
+        </ModalPortal>
       )}
       <section className='children'>
         {children}

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, memo } from 'react';
 import useSingleBook from '../../hooks/useSingleBook';
-import useRemote from '../../hooks/useRemote';
+import {useRemote} from '../../hooks/useRemote';
 import { BookDetail } from '../../components/BookDetail';
 
 const MemoizeBookDetail = memo(BookDetail);

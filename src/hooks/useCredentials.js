@@ -2,7 +2,7 @@ import { useAPI } from './useAPI';
 import { useData } from './useData';
 
 
-export default function useCredentials () {
+export const useCredentials = () => {
     const { credentials } = useData();
     const { setCredentials } = useAPI();
 

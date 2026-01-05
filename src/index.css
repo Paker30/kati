@@ -29,6 +29,7 @@ e76f51 */
   --brand-color_4: #0496ff;
   --brand-color_5: #FFFFFF;
   --newCommunityTheme-postLine: #ccc;
+  --mobile: 37rem;
 }
 html {
   box-sizing: border-box;
