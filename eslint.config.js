@@ -5,16 +5,15 @@ import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
   globalIgnores(['build/*', 'config/*']),
-  { 
+  {
+    ...js.configs.recommended,
     files: ["**/*.{js,mjs,cjs,jsx}"],
-    plugins: { js },
-    extends: ["js/recommended"],
     languageOptions: { globals: globals.browser }
   },
   pluginReact.configs.flat.recommended,
   {
     rules: {
-      'react/prop-types': [0]
+      'react/prop-types': 'off'
     }
   }
 ]);
