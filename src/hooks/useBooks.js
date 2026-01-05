@@ -3,13 +3,7 @@ import { getAll, insert, getBy, update, remove } from '../services/books';
 import {useData} from './useData';
 import {useAPI} from './useAPI';
 
-const formatBook = ({ id, key, doc, author, title }) => ({ id, key, ...doc });
-const mergeBooks = (books) => (newBook) => {
-    if (!books.find(({ id }) => id === newBook.id)) {
-        return [...books, newBook];
-    }
-    return [...books.filter(({ id }) => id !== newBook.id), newBook];
-};
+const formatBook = ({ id, key, doc }) => ({ id, key, ...doc });
 
 export const useBooks = ({ keyword, category } = { keyword: null }) => {
     const { books, isLoading: loading} = useData();

@@ -6,7 +6,7 @@ import { useCredentials } from '../../hooks/useCredentials';
 export default function Login() {
 
   const { setCredentials, credentials } = useCredentials();
-  const [_,pushLocation] = useLocation();
+  const [,pushLocation] = useLocation();
 
   const login = useGoogleLogin({
     onSuccess: setCredentials,

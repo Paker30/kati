@@ -9,7 +9,7 @@ const CATEGORIES = ['author', 'title'];
 
 export const SearchForm =({ initialKeyword = '', initialCategory = CATEGORIES[1] }) => {
 
-    const [_, pushLocation] = useLocation();
+    const [, pushLocation] = useLocation();
 
     const { keyword, category, changeCategory, changeKeyword } = useForm({ initialKeyword, initialCategory });
 

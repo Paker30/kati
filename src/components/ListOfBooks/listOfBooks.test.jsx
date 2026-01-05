@@ -2,7 +2,7 @@ import React from 'react';
 import {vi} from 'vitest';
 import { render, screen } from '@testing-library/react';
 import {ListOfBooks} from './index';
-import { test, expect} from 'vitest';
+import { test, expect, describe} from 'vitest';
 
 vi.mock('../../components/Book', () => ({ 'Book': () => <div data-testid="book">Mocked Book</div> }));
 

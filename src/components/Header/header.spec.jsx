@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
-import {describe, test, expect, vi} from 'vitest';
+import {describe, test, expect, vi, beforeEach} from 'vitest';
 import { Header } from './index';
 
 const mockIsInit = vi.fn();
@@ -19,7 +19,7 @@ vi.mock('wouter', () => ({
     useLocation: () => [null, mockPushLocation]
 }));
 vi.mock('../page/New', () => ({
-    New: () => <div test-id="new-page">New</div>
+    New: () => <div>New</div>
 }));
 vi.mock('../../hooks/useCredentials', () => ({
     useCredentials: () => ({credentials: fakeCredentials})

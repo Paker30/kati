@@ -14,7 +14,7 @@ export const ACTIONS = {
 };
 
 const ACTIONS_REDUCERS = {
-    [ACTIONS.START_ADDING_BOOKS]: (state, { payload }) => ({
+    [ACTIONS.START_ADDING_BOOKS]: (state) => ({
         ...state,
         isLoading: true
     }),

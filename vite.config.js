@@ -1,9 +1,8 @@
-import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import { getClientEnvironment } from './config/env';
 import paths from './config/paths';
 
-const defineConfig = ({ mode }) => {
+const defineConfig = () => {
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
   return {
@@ -20,11 +19,6 @@ const defineConfig = ({ mode }) => {
       minify: 'esbuild',
       target: 'esnext',
       manifest: true,
-    },
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, 'src'),
-      },
     },
     test: {
       globals: true,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import {vi, describe, test} from 'vitest';
+import {vi, describe, test, beforeEach, expect} from 'vitest';
 import Login from './index';
 
 const mockSetCredentials = vi.fn();

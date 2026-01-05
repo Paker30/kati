@@ -28,11 +28,7 @@ const sync = dbToCloud({
     onDelete: (id) => {
         return sync.delete(id);
     },
-    getState: async (drive) => {
-        try {
-            return JSON.parse(localStorage.getItem(`cloudSync/${drive.name}/state`));
-        } catch (err) { }
-    },
+    getState: (drive) => JSON.parse(localStorage.getItem(`cloudSync/${drive.name}/state`)),
     setState: async (drive, state) => {
         localStorage.setItem(`cloudSync/${drive.name}/state`, JSON.stringify(state));
     },

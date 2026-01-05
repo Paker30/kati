@@ -11,7 +11,7 @@ export default function Detail({ params }) {
 
     const memoizeRemove = useCallback(() => {
         remove(book)
-            .then(({ id, rev }) => sync.delete(id))
+            .then(({ id }) => sync.delete(id))
     }, [book, remove, sync]);
 
     useEffect(() => {

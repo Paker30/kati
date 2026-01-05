@@ -1,4 +1,4 @@
-import {describe, test, expect, vi} from 'vitest';
+import {describe, test, expect, vi, beforeEach} from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import useSingleBook from './useSingleBook';
 

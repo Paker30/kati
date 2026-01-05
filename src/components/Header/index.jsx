@@ -16,7 +16,7 @@ export const Header = ({ children }) => {
   const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
   const { credentials } = useCredentials();
-  const [_, pushLocation] = useLocation();
+  const [, pushLocation] = useLocation();
   const { loading, populateBooks, startAddingBook, errorAddingBook } = useBooks();
 
   const handleSynchronize = (event) => {
