@@ -1,6 +1,6 @@
-import React from 'react';
-import Login from '../../components/Login';
-import LogOut from '../../components/Logout';
+import React from "react";
+import Login from "../../components/Login";
+import { LogOut } from "../../components/Logout";
 
 export default function Accounts() {
   return (
@@ -8,5 +8,5 @@ export default function Accounts() {
       <Login />
       <LogOut />
     </>
-  )
-};
+  );
+}

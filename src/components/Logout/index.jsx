@@ -1,13 +1,3 @@
-import React from 'react';
-import { useCredentials } from '../../hooks/useCredentials';
+import React from "react";
 
-export default function Login() {
-
-    const { setCredentials } = useCredentials();
-
-    return (
-        <div>
-            empty
-        </div>
-    )
-}
+export const LogOut = () => <div>empty</div>;
