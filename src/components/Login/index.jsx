@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'wouter';
-import { useGoogleLogin } from '@react-oauth/google';
-import { useCredentials } from '../../hooks/useCredentials';
+import React, { useEffect } from "react";
+import { useLocation } from "wouter";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useCredentials } from "../../hooks/useCredentials";
 
 export default function Login() {
-
   const { setCredentials, credentials } = useCredentials();
-  const [,pushLocation] = useLocation();
+  const [, pushLocation] = useLocation();
 
   const login = useGoogleLogin({
     onSuccess: setCredentials,
@@ -14,15 +13,13 @@ export default function Login() {
 
   useEffect(() => {
     if (credentials.access_token) {
-      pushLocation('/');
+      pushLocation("/");
     }
   }, [credentials, pushLocation]);
 
   return (
     <div>
-      <button onClick={ () => login() }>
-        Sign in with Google
-      </button>
+      <button onClick={() => login()}>Sign in with Google</button>
     </div>
-  )
+  );
 }

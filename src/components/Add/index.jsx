@@ -1,42 +1,42 @@
-import React, { useState } from 'react';
-import { useBooks } from '../../hooks/useBooks';
-import { nanoid } from 'nanoid';
-import { useRemote } from '../../hooks/useRemote';
-import { useModal } from '../../hooks/useModal';
+import React, { useState } from "react";
+import { useBooks } from "../../hooks/useBooks";
+import { nanoid } from "nanoid";
+import { useRemote } from "../../hooks/useRemote";
+import { useModal } from "../../hooks/useModal";
 
-import './Add.css';
+import "./Add.css";
 
 export const Add = () => {
-    const { closeModal } = useModal();
-    const { sync } = useRemote();
-    const [author, setAuthor] = useState('');
-    const [title, setTitle] = useState('');
-    const { addBook } = useBooks();
+  const { closeModal } = useModal();
+  const { sync } = useRemote();
+  const [author, setAuthor] = useState("");
+  const [title, setTitle] = useState("");
+  const { addBook } = useBooks();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        addBook({ author, title, id: nanoid(), isRead: false })
-            .then(({ id, rev }) => sync.put(id, rev))
-            .finally(() => closeModal());
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addBook({ author, title, id: nanoid(), isRead: false })
+      .then(({ id, rev }) => sync.put(id, rev))
+      .finally(() => closeModal());
+  };
 
-    return (
-        <form className="form" onSubmit={handleSubmit}>
-            <label htmlFor='author'>Author</label>
-            <input
-                placeholder='Enter author'
-                name='author'
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-            />
-            <label htmlFor='title'>Title</label>
-            <input
-                placeholder='Enter title'
-                name='title'
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            <button className='btn'>Add</button>
-        </form>
-    )
-}
+  return (
+    <form className="form" onSubmit={handleSubmit}>
+      <label htmlFor="author">Author</label>
+      <input
+        placeholder="Enter author"
+        name="author"
+        value={author}
+        onChange={(e) => setAuthor(e.target.value)}
+      />
+      <label htmlFor="title">Title</label>
+      <input
+        placeholder="Enter title"
+        name="title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <button className="btn">Add</button>
+    </form>
+  );
+};

@@ -24,15 +24,15 @@ const reducer = (state, action) => {
 export default function useForm({
     initialKeyword = '',
     initialCategory = 'title'
-} = {}){
-    const [{ keyword, category}, dispatch] = useReducer(reducer, {
+} = {}) {
+    const [{ keyword, category }, dispatch] = useReducer(reducer, {
         keyword: decodeURIComponent(initialKeyword),
         category: initialCategory
     });
-    
+
     return {
-        changeKeyword: ({ keyword }) => dispatch({ type: ACTIONS.CHANGE_KEYWORD, payload: keyword}),
-        changeCategory: ({ category }) => dispatch({ type: ACTIONS.CHANGE_CATEGORY, payload: category}),
+        changeKeyword: ({ keyword }) => dispatch({ type: ACTIONS.CHANGE_KEYWORD, payload: keyword }),
+        changeCategory: ({ category }) => dispatch({ type: ACTIONS.CHANGE_CATEGORY, payload: category }),
         keyword,
         category
     }

@@ -3,8 +3,8 @@ import { update, getAll, get, insert } from './books';
 
 const remove = (removeKey) => (object) => {
     return Object.keys(object).reduce((acc, key) => {
-        if(key !== removeKey) {
-            return {...acc, [key]: object[key]};
+        if (key !== removeKey) {
+            return { ...acc, [key]: object[key] };
         }
         return acc;
     }, {});
@@ -22,7 +22,7 @@ const sync = dbToCloud({
     },
     onPut: (book) => {
         return get(book.id)
-            .then((localeBook) => update({...localeBook, author: book.author, isRead: book.isRead, title: book.title}))
+            .then((localeBook) => update({ ...localeBook, author: book.author, isRead: book.isRead, title: book.title }))
             .catch(() => insert(remove('_rev')(book)))
     },
     onDelete: (id) => {

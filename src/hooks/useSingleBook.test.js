@@ -1,4 +1,4 @@
-import {describe, test, expect, vi, beforeEach} from 'vitest';
+import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import useSingleBook from './useSingleBook';
 
@@ -13,27 +13,28 @@ vi.mock('./useBooks', () => ({
 }));
 
 const mocks = vi.hoisted(() => {
-  return {
-    getAll: vi.fn(),
-    insert: vi.fn(),
-    remove:vi.fn(),
-    get: vi.fn(),
-    update:vi.fn(),
-    getBy: {
-        author: vi.fn(),
-        title: vi.fn()
-    },
-  }
+    return {
+        getAll: vi.fn(),
+        insert: vi.fn(),
+        remove: vi.fn(),
+        get: vi.fn(),
+        update: vi.fn(),
+        getBy: {
+            author: vi.fn(),
+            title: vi.fn()
+        },
+    }
 });
-vi.mock('../services/books',  () => {
-    return{
-    getAll: mocks.getAll,
-    insert: mocks.insert,
-    remove:mocks.remove,
-    get: mocks.get,
-    update:mocks.update,
-    getBy: mocks.getBy
-}});
+vi.mock('../services/books', () => {
+    return {
+        getAll: mocks.getAll,
+        insert: mocks.insert,
+        remove: mocks.remove,
+        get: mocks.get,
+        update: mocks.update,
+        getBy: mocks.getBy
+    }
+});
 
 describe('useSingleBook', () => {
     beforeEach(() => {

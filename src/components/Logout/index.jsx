@@ -1,7 +1,3 @@
-import React from 'react';
+import React from "react";
 
-export const LogOut = () => (
-        <div>
-            empty
-        </div>
-    );
+export const LogOut = () => <div>empty</div>;
