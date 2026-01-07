@@ -21,11 +21,11 @@ export const Book = ({ title, author, isRead, id }) => {
       </Link>
       {isRead ? (
         <button className="Book-btn" onClick={handleRead(id)}>
-          📖
+          <img className="icon" src="openBook.svg" alt="read book" />
         </button>
       ) : (
         <button className="Book-btn" onClick={handleRead(id)}>
-          📘
+          <img className="icon" src="closeBook.svg" alt="unread book" />
         </button>
       )}
     </div>

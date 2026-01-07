@@ -6,6 +6,9 @@
     padding: 1rem;
     background-color: var(--brand-color_5);
     margin-bottom: 30px;
+    img {
+      filter: invert(1);
+    }
 }
 
 .gf-header section {
