@@ -21,7 +21,7 @@
     "react-head": "^3.4.2",
     "react-refresh": "^0.11.0",
     "resolve": "^1.20.0",
-    "resolve-url-loader": "^4.0.0",
+    "resolve-url-loader": "^5.0.0",
     "wouter": "^3.7.1"
   },
   "scripts": {
@@ -64,7 +64,7 @@
     "globals": "^17.0.0",
     "jsdom": "^27.0.1",
     "path-browserify": "^1.0.1",
-    "vite": "^7.1.8",
+    "vite": "^7.3.0",
     "vitest": "^4.0.16",
     "web-vitals": "^2.1.4"
   },
