@@ -34,8 +34,8 @@ describe("Add component", () => {
       expect(mockSetRead).toBeCalledTimes(0);
       expect(await screen.findByText("Valor y al toro")).toBeVisible();
       expect(await screen.findByText("Francisco Ibañez")).toBeVisible();
-      expect(await screen.findByText("📖")).toBeVisible();
-      const button = screen.getByRole("button", { name: "📖" });
+      expect(await screen.findByTestId("open-book-button")).toBeVisible();
+      const button = screen.getByTestId("open-book-button");
       button.click();
       expect(mockSetRead).toBeCalledTimes(1);
       await waitFor(() => expect(mockPut).toBeCalledTimes(1));
@@ -55,8 +55,8 @@ describe("Add component", () => {
       expect(mockSetRead).toBeCalledTimes(0);
       expect(await screen.findByText("Valor y al toro")).toBeVisible();
       expect(await screen.findByText("Francisco Ibañez")).toBeVisible();
-      expect(await screen.findByText("📘")).toBeVisible();
-      const button = screen.getByRole("button", { name: "📘" });
+      expect(await screen.findByTestId("close-book-button")).toBeVisible();
+      const button = screen.getByTestId("close-book-button");
       button.click();
       expect(mockSetRead).toBeCalledTimes(1);
       await waitFor(() => expect(mockPut).toBeCalledTimes(1));

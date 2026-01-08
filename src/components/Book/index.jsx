@@ -20,11 +20,11 @@ export const Book = ({ title, author, isRead, id }) => {
         <span>{author}</span>
       </Link>
       {isRead ? (
-        <button className="Book-btn" onClick={handleRead(id)}>
+        <button data-testid="open-book-button" className="Book-btn" onClick={handleRead(id)}>
           <img className="icon" src="openBook.svg" alt="read book" />
         </button>
       ) : (
-        <button className="Book-btn" onClick={handleRead(id)}>
+        <button data-testid="close-book-button" className="Book-btn" onClick={handleRead(id)}>
           <img className="icon" src="closeBook.svg" alt="unread book" />
         </button>
       )}
