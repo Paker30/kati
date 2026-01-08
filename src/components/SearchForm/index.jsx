@@ -32,7 +32,7 @@ export const SearchForm = ({
 
   return (
     <form onSubmit={handleSubmit} className="Search">
-      <button className="btn">🔎</button>
+      <button className="btn"><img className="icon" src="search.svg" alt="search icon"/></button>
       <input
         type="text"
         placeholder="Search a book here..."

@@ -93,18 +93,18 @@ describe("Header component", () => {
     expect(mockPushLocation).toHaveBeenCalledTimes(0);
     expect(mocks.modalPortal).toHaveBeenCalledTimes(0);
     expect(mocks.getAll).toHaveBeenCalledTimes(0);
-    expect(screen.queryByText("Login")).not.toBeNull();
+    expect(screen.queryByTestId("login-button")).not.toBeNull();
     expect(screen.queryByText("Sync")).toBeNull();
-    expect(screen.queryByText("＋")).not.toBeNull();
+    expect(screen.queryByTestId("add-button")).not.toBeNull();
     expect(screen.queryByText("Synchronizing")).toBeNull();
   });
 
   test("user has log in", () => {
     fakeCredentials = { token: "fakeToken" };
     render(<Header />);
-    expect(screen.queryByText("Login")).toBeNull();
+    expect(screen.queryByTestId("login-button")).toBeNull();
     expect(screen.queryByText("Sync")).not.toBeNull();
-    expect(screen.queryByText("＋")).not.toBeNull();
+    expect(screen.queryByTestId("add-button")).not.toBeNull();
   });
 
   test("modal is open", () => {

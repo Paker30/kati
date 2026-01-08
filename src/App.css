@@ -40,6 +40,11 @@
   animation-timing-function: ease-in;
 }
 
+.icon {
+  width: 30px;
+  height: 30px;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

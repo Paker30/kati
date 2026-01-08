@@ -44,10 +44,8 @@ export const Header = ({ children }) => {
 
   return (
     <header className="gf-header">
-      <button className="btn" onClick={openModal}>
-        <span aria-label="Add book to list" role="img">
-          ＋
-        </span>
+      <button data-testid="add-button" className="btn" onClick={openModal}>
+        <img className="icon" src="plusSquare.svg" aria-label="Add book to list" />
       </button>
       {!isEmpty(credentials) && (
         <button className="btn fade-in" onClick={handleSynchronize}>
@@ -57,16 +55,14 @@ export const Header = ({ children }) => {
         </button>
       )}
       {isEmpty(credentials) && (
-        <button className="btn" onClick={handleLogin}>
-          <span aria-label="Add book to list" role="img">
-            Login
-          </span>
+        <button data-testid="login-button" className="btn" onClick={handleLogin}>
+          <img className="icon" src="login.svg" aria-label="Log in into the application" />
         </button>
       )}
       {loading && (
         <div className="synchronize">
           <span>Synchronizing</span>
-          <div className="spinner"></div>
+          <div data-testid="spinner" className="spinner"></div>
         </div>
       )}
       {showModal && (
