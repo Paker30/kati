@@ -17,10 +17,12 @@ function App() {
         <section className="App-content">
           <KatiContextProvider>
             <Header>
-              <Link to="/">
-                <h1>KATI</h1>
-              </Link>
-              <small>{packageInfo.version}</small>
+              <div>
+                <Link to="/">
+                  <h1>KATI</h1>
+                </Link>
+                <span>{packageInfo.version}</span>
+              </div>
             </Header>
             <Switch>
               <Route component={HomePage} path="/" />
