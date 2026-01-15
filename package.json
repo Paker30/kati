@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
-    "db-to-cloud": "^0.7.0",
+    "db-to-cloud": "^0.8.1",
     "file-loader": "^6.2.0",
     "fs-extra": "^10.0.0",
     "identity-obj-proxy": "^3.0.0",
