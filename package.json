@@ -20,7 +20,7 @@
     "react-dom": "^18.0.0",
     "react-head": "^3.4.2",
     "react-refresh": "^0.11.0",
-    "resolve": "^1.20.0",
+    "resolve": "^1.22.11",
     "resolve-url-loader": "^5.0.0",
     "wouter": "^3.7.1"
   },
