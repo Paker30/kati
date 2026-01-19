@@ -6,7 +6,7 @@
     background-color: var(--brand-color_5);
     margin-bottom: 30px;
     position: sticky;
-    top: 16px;
+    top: 0px;
     img {
       filter: invert(1);
     }
