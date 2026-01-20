@@ -22,6 +22,7 @@
   cursor: pointer;
   background-color: var(--brand-color_4);
   color: var(--theme-body-txt);
+  border-radius: 0.125rem;
 }
 
 .Book-btn {

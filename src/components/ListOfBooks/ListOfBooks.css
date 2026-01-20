@@ -1,11 +1,14 @@
+.ListOfBooks {
+    display:flex;
+    flex-direction: column;
+    gap: var(--gap);
+}
+
 .ListOfBooks .Book{
     min-height: 40px;
     justify-content: center;
     align-items:center;
     border: thin solid var(--newCommunityTheme-postLine);
     margin-bottom: -1px;
-}
-
-.ListOfBooks .Book:first-child{
-    border-radius: 4px 4px 0 0;
+    border-radius: 4px;
 }

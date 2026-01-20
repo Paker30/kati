@@ -47,7 +47,7 @@ export const Header = ({ children }) => {
   return (
     <header className="gf-header">
       <section>
-        <div>
+        <div className="gf-header-buttons">
           <button data-testid="add-button" className="btn" onClick={openModal}>
             <img
               className="icon"

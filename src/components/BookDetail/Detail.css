@@ -5,6 +5,7 @@
     background-color: var(--brand-color_5);
     color: var(--theme-body-dark-txt);
     padding: 1rem;
+    border-radius: 4px;
 }
 
 .BookDetails header {

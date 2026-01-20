@@ -26,6 +26,10 @@
       margin-right: 8px;
     }
 }
+.gf-header-buttons {
+  display: flex;
+  gap: var(--gap);
+}
 
 .synchronize {
     padding: .5rem 1rem;

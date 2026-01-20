@@ -13,9 +13,7 @@ const Home = () => {
 
   return (
     <>
-      <div>
         <MemoizedListOfBooks books={books} />
-      </div>
     </>
   );
 };
