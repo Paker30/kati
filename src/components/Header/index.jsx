@@ -1,8 +1,9 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import "./Header.css";
 import { ModalPortal } from "../Modal";
 import { New } from "../../pages/New";
+import { NewPhoto } from "../../pages/NewPhoto";
 import { useRemote } from "../../hooks/useRemote";
 import { useCredentials } from "../../hooks/useCredentials";
 import { useBooks } from "../../hooks/useBooks";
@@ -10,16 +11,23 @@ import { useModal } from "../../hooks/useModal";
 import { getAll } from "../../services/books";
 import { SearchForm } from "../../components/SearchForm";
 
+
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
 export const Header = ({ children }) => {
   const MemoizedSearchForm = memo(SearchForm);
+  const [addBookBy, setAddBookBy] = useState("form");
+  const [addBy, setAddBy] = useState(<New />);
   const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [, pushLocation] = useLocation();
   const { loading, populateBooks, startAddingBook, errorAddingBook } =
     useBooks();
+
+  useEffect(() => {
+    addBookBy === "form" ? setAddBy(New) : setAddBy(NewPhoto);
+  }, [addBookBy, New]);
 
   const handleSynchronize = (event) => {
     event.preventDefault();
@@ -48,11 +56,32 @@ export const Header = ({ children }) => {
     <header className="gf-header">
       <section>
         <div className="gf-header-buttons">
-          <button data-testid="add-button" className="btn" onClick={openModal}>
+          <button
+            data-testid="add-button"
+            className="btn"
+            onClick={() => {
+              setAddBookBy("photo");
+              openModal();
+            }}
+          >
+            <img
+              className="icon"
+              src="camera.svg"
+              aria-label="Add book to list"
+            />
+          </button>
+          <button
+            data-testid="add-button"
+            className="btn"
+            onClick={() => {
+              setAddBookBy("form");
+              openModal();
+            }}
+          >
             <img
               className="icon"
               src="plusSquare.svg"
-              aria-label="Add book to list"
+              aria-label="Add book to list from photo"
             />
           </button>
           {!isEmpty(credentials) && (
@@ -81,11 +110,7 @@ export const Header = ({ children }) => {
               <div data-testid="spinner" className="spinner"></div>
             </div>
           )}
-          {showModal && (
-            <ModalPortal onClose={closeModal}>
-              <New />
-            </ModalPortal>
-          )}
+          {showModal && <ModalPortal onClose={closeModal}>{addBy}</ModalPortal>}
         </div>
         {children}
       </section>

@@ -1,0 +1,133 @@
+import React, { useState, useRef, useEffect } from "react";
+import { useBooks } from "../../hooks/useBooks";
+import { useRemote } from "../../hooks/useRemote";
+import { useModal } from "../../hooks/useModal";
+import { createWorker } from "tesseract.js";
+
+import "./Photo.css";
+const WIDTH = 320; // We will scale the photo width to this
+
+export const Photo = () => {
+  const { closeModal } = useModal();
+  const { sync } = useRemote();
+  const [author, setAuthor] = useState("");
+  const [title, setTitle] = useState("");
+  const { addBook } = useBooks();
+  const [streaming, setStreaming] = useState(false);
+  const [height, setHeight] = useState(0);
+  const [isPhoto, setIsPhoto] = useState(false);
+  const [worker, setWorker] = useState();
+  const video = useRef(null);
+  const canvas = useRef(null);
+  const photo = useRef(null);
+
+  const enableCamera = () => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false })
+      .then((stream) => {
+        video.current.srcObject = stream;
+        video.current.play();
+      })
+      .catch((err) => {
+        console.error(`An error occurred: ${err}`);
+      });
+  };
+
+  const canPlay = () => {
+    if (!streaming) {
+      setHeight(video.current.videoHeight / (video.current.videoWidth / WIDTH));
+      setStreaming(true);
+    }
+  };
+
+  useEffect(() => {
+    createWorker("eng").then((worker) => {
+      setWorker(worker);
+    });
+    return () => worker?.terminate();
+  }, []);
+
+  useEffect(() => {
+    if (streaming) {
+      video.current.setAttribute("width", WIDTH);
+      video.current.setAttribute("height", height);
+      canvas.current.setAttribute("width", WIDTH);
+      canvas.current.setAttribute("height", height);
+    }
+  }, [height, streaming]);
+
+  useEffect(() => {
+    video.current.addEventListener("canplay", canPlay);
+  }, [video]);
+
+  useEffect(() => {
+    if (isPhoto) {
+      worker
+        .recognize(
+          photo.current
+        )
+        .then(({ data: { text } }) => {
+          console.log(text);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+            clearPhoto
+          worker.reinitialize();
+          setIsPhoto(false);
+        });
+    }
+  }, [isPhoto, photo]);
+
+  const clearPhoto = () => {
+    const context = canvas.current.getContext("2d");
+    context.fillStyle = "#aaaaaa";
+    context.fillRect(0, 0, canvas.current.width, canvas.current.height);
+    const data = canvas.current.toDataURL("image/png");
+    photo.current.setAttribute("src", data);
+    setIsPhoto(false);
+  };
+
+  const takePicture = () => {
+    const context = canvas.current.getContext("2d");
+    if (WIDTH && height) {
+      canvas.current.width = WIDTH;
+      canvas.current.height = height;
+      context.drawImage(video.current, 0, 0, WIDTH, height);
+      const data = canvas.current.toDataURL("image/png");
+      photo.current.setAttribute("src", data);
+      setIsPhoto(true);
+    } else {
+      clearPhoto();
+    }
+  };
+
+  return (
+    <div className="form">
+      <div>
+        <video ref={video}>Video stream not available.</video>
+      </div>
+      <canvas className="canvas" ref={canvas}></canvas>
+      <div>
+        <img
+          src=""
+          alt="The screen capture will appear in this box."
+          ref={photo}
+        />
+      </div>
+      <button className="btn" onClick={enableCamera}>
+        Allow Camera
+      </button>
+      <button
+        className="btn"
+        onClick={(ev) => {
+          takePicture();
+          ev.preventDefault();
+        }}
+      >
+        Add
+      </button>
+    </div>
+  );
+};
