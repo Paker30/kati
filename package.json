@@ -65,7 +65,7 @@
     "jsdom": "^27.0.1",
     "path-browserify": "^1.0.1",
     "vite": "^7.3.1",
-    "vitest": "^4.0.16",
+    "vitest": "^4.0.17",
     "web-vitals": "^5.1.0"
   },
   "engines": {
