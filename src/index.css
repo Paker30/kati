@@ -30,6 +30,7 @@ e76f51 */
   --brand-color_5: #FFFFFF;
   --newCommunityTheme-postLine: #ccc;
   --mobile: 37rem;
+  --gap: 0.125rem;
 }
 html {
   box-sizing: border-box;

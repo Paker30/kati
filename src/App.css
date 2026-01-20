@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 16px;
+  padding: 0 16px;
 }
 
 .btn {
@@ -22,6 +22,7 @@
   cursor: pointer;
   background-color: var(--brand-color_4);
   color: var(--theme-body-txt);
+  border-radius: 0.125rem;
 }
 
 .Book-btn {

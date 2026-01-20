@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useLocation } from "wouter";
 import "./Header.css";
 import { ModalPortal } from "../Modal";
@@ -8,10 +8,12 @@ import { useCredentials } from "../../hooks/useCredentials";
 import { useBooks } from "../../hooks/useBooks";
 import { useModal } from "../../hooks/useModal";
 import { getAll } from "../../services/books";
+import { SearchForm } from "../../components/SearchForm";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
 export const Header = ({ children }) => {
+  const MemoizedSearchForm = memo(SearchForm);
   const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
   const { credentials } = useCredentials();
@@ -44,33 +46,52 @@ export const Header = ({ children }) => {
 
   return (
     <header className="gf-header">
-      <button data-testid="add-button" className="btn" onClick={openModal}>
-        <img className="icon" src="plusSquare.svg" aria-label="Add book to list" />
-      </button>
-      {!isEmpty(credentials) && (
-        <button className="btn fade-in" onClick={handleSynchronize}>
-          <span aria-label="Synchronize remote book list" role="img">
-            Sync
-          </span>
-        </button>
-      )}
-      {isEmpty(credentials) && (
-        <button data-testid="login-button" className="btn" onClick={handleLogin}>
-          <img className="icon" src="login.svg" aria-label="Log in into the application" />
-        </button>
-      )}
-      {loading && (
-        <div className="synchronize">
-          <span>Synchronizing</span>
-          <div data-testid="spinner" className="spinner"></div>
+      <section>
+        <div className="gf-header-buttons">
+          <button data-testid="add-button" className="btn" onClick={openModal}>
+            <img
+              className="icon"
+              src="plusSquare.svg"
+              aria-label="Add book to list"
+            />
+          </button>
+          {!isEmpty(credentials) && (
+            <button className="btn fade-in" onClick={handleSynchronize}>
+              <span aria-label="Synchronize remote book list" role="img">
+                Sync
+              </span>
+            </button>
+          )}
+          {isEmpty(credentials) && (
+            <button
+              data-testid="login-button"
+              className="btn"
+              onClick={handleLogin}
+            >
+              <img
+                className="icon"
+                src="login.svg"
+                aria-label="Log in into the application"
+              />
+            </button>
+          )}
+          {loading && (
+            <div className="synchronize">
+              <span>Synchronizing</span>
+              <div data-testid="spinner" className="spinner"></div>
+            </div>
+          )}
+          {showModal && (
+            <ModalPortal onClose={closeModal}>
+              <New />
+            </ModalPortal>
+          )}
         </div>
-      )}
-      {showModal && (
-        <ModalPortal onClose={closeModal}>
-          <New />
-        </ModalPortal>
-      )}
-      <section className="children">{children}</section>
+        {children}
+      </section>
+      <section>
+        <MemoizedSearchForm />
+      </section>
     </header>
   );
 };
