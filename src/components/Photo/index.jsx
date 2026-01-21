@@ -63,9 +63,7 @@ export const Photo = () => {
   useEffect(() => {
     if (isPhoto) {
       worker
-        .recognize(
-          photo.current
-        )
+        .recognize(photo.current)
         .then(({ data: { text } }) => {
           console.log(text);
         })
@@ -73,7 +71,7 @@ export const Photo = () => {
           console.error(error);
         })
         .finally(() => {
-            clearPhoto
+          clearPhoto;
           worker.reinitialize();
           setIsPhoto(false);
         });
@@ -104,11 +102,13 @@ export const Photo = () => {
   };
 
   return (
-    <div className="form">
+    <article className="Photo">
       <div>
         <video ref={video}>Video stream not available.</video>
       </div>
-      <canvas className="canvas" ref={canvas}></canvas>
+      <div>
+        <canvas className="canvas" ref={canvas}></canvas>
+      </div>
       <div>
         <img
           src=""
@@ -116,18 +116,20 @@ export const Photo = () => {
           ref={photo}
         />
       </div>
-      <button className="btn" onClick={enableCamera}>
-        Allow Camera
-      </button>
-      <button
-        className="btn"
-        onClick={(ev) => {
-          takePicture();
-          ev.preventDefault();
-        }}
-      >
-        Add
-      </button>
-    </div>
+      <section>
+        <button className="btn" onClick={enableCamera}>
+          Allow Camera
+        </button>
+        <button
+          className="btn"
+          onClick={(ev) => {
+            takePicture();
+            ev.preventDefault();
+          }}
+        >
+          Add
+        </button>
+      </section>
+    </article>
   );
 };
