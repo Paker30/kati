@@ -104,7 +104,7 @@ export const Photo = () => {
   return (
     <article className="Photo">
       <div>
-        <video ref={video}>Video stream not available.</video>
+        <video ref={video} aria-label="Video to see book's cover">Video stream not available.</video>
       </div>
       <div>
         <canvas className="canvas" ref={canvas}></canvas>
@@ -114,11 +114,12 @@ export const Photo = () => {
           src=""
           alt="The screen capture will appear in this box."
           ref={photo}
+          aria-label="Book's cover picture"
         />
       </div>
       <section>
-        <button className="btn" onClick={enableCamera}>
-          Allow Camera
+        <button className="btn" onClick={enableCamera} aria-label="Enable camera">
+          Enable camera
         </button>
         <button
           className="btn"
@@ -126,8 +127,9 @@ export const Photo = () => {
             takePicture();
             ev.preventDefault();
           }}
+          aria-label="Take a picture from book's cover"
         >
-          Add
+          Take a picture
         </button>
       </section>
     </article>
