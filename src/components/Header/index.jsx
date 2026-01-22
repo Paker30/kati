@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 import { useLocation } from "wouter";
 import "./Header.css";
 import { ModalPortal } from "../Modal";
@@ -17,17 +17,12 @@ const isEmpty = (obj) => Object.keys(obj).length === 0;
 export const Header = ({ children }) => {
   const MemoizedSearchForm = memo(SearchForm);
   const [addBookBy, setAddBookBy] = useState("form");
-  const [addBy, setAddBy] = useState(<New />);
   const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [, pushLocation] = useLocation();
   const { loading, populateBooks, startAddingBook, errorAddingBook } =
     useBooks();
-
-  useEffect(() => {
-    addBookBy === "form" ? setAddBy(New) : setAddBy(NewPhoto);
-  }, [addBookBy, New]);
 
   const handleSynchronize = (event) => {
     event.preventDefault();
@@ -110,7 +105,7 @@ export const Header = ({ children }) => {
               <div data-testid="spinner" className="spinner"></div>
             </div>
           )}
-          {showModal && <ModalPortal onClose={closeModal}>{addBy}</ModalPortal>}
+          {showModal && <ModalPortal onClose={closeModal}>{addBookBy === 'form' ? <New /> :  <NewPhoto />}</ModalPortal>}
         </div>
         {children}
       </section>

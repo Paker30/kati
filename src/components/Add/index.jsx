@@ -6,11 +6,11 @@ import { useModal } from "../../hooks/useModal";
 
 import "./Add.css";
 
-export const Add = () => {
+export const Add = ({author = '', title =''}) => {
   const { closeModal } = useModal();
   const { sync } = useRemote();
-  const [author, setAuthor] = useState("");
-  const [title, setTitle] = useState("");
+  const [newAuthor, setNewAuthor] = useState(author);
+  const [newTitle, setNewTitle] = useState(title);
   const { addBook } = useBooks();
 
   const handleSubmit = (e) => {
@@ -26,15 +26,15 @@ export const Add = () => {
       <input
         placeholder="Enter author"
         name="author"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
+        value={newAuthor}
+        onChange={(e) => setNewAuthor(e.target.value)}
       />
       <label htmlFor="title">Title</label>
       <input
         placeholder="Enter title"
         name="title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={newTitle}
+        onChange={(e) => setNewTitle(e.target.value)}
       />
       <button className="btn">Add</button>
     </form>

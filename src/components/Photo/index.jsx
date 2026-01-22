@@ -4,11 +4,12 @@ import { createWorker } from "tesseract.js";
 import "./Photo.css";
 const WIDTH = 320; // We will scale the photo width to this
 
-export const Photo = () => {
+export const Photo = ({ setBook, acceptPhoto }) => {
   const [streaming, setStreaming] = useState(false);
   const [height, setHeight] = useState(0);
   const [isPhoto, setIsPhoto] = useState(false);
   const [worker, setWorker] = useState();
+  const [captureBook, setCaptureBook] = useState({ author: "", title: "" });
   const video = useRef(null);
   const canvas = useRef(null);
   const photo = useRef(null);
@@ -57,14 +58,14 @@ export const Photo = () => {
         .recognize(photo.current)
         .then(({ data: { text } }) => {
           console.log(text);
+          setCaptureBook({ title: "Hello", author: "World" });
         })
         .catch((error) => {
           console.error(error);
+          clearPhoto();
         })
         .finally(() => {
-          clearPhoto;
           worker.reinitialize();
-          setIsPhoto(false);
         });
     }
   }, [isPhoto, photo]);
@@ -93,7 +94,9 @@ export const Photo = () => {
   return (
     <article className="Photo">
       <div>
-        <video ref={video} aria-label="Video to see book's cover">Video stream not available.</video>
+        <video ref={video} aria-label="Video to see book's cover">
+          Video stream not available.
+        </video>
       </div>
       <div>
         <canvas className="canvas" ref={canvas}></canvas>
@@ -106,7 +109,7 @@ export const Photo = () => {
           aria-label="Book's cover picture"
         />
       </div>
-      <section>
+      <section className="Photo-buttons">
         <button
           className="btn"
           onClick={(ev) => {
@@ -115,8 +118,22 @@ export const Photo = () => {
           }}
           aria-label="Take a picture from book's cover"
         >
-          Take a picture
+          Read cover
         </button>
+        {isPhoto && (
+          <button
+            className="btn"
+            disabled={!isPhoto}
+            onClick={(ev) => {
+              ev.preventDefault();
+              setBook(captureBook);
+              acceptPhoto(true);
+            }}
+            aria-label="Accept title and author from picture"
+          >
+            Accept Book
+          </button>
+        )}
       </section>
     </article>
   );

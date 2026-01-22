@@ -36,3 +36,9 @@
 .canvas {
     display: none;
 }
+
+.Photo-buttons {
+    display: flex;
+    gap: var(--gap);
+    justify-content: space-between;
+}
