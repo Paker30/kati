@@ -1,5 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { createWorker } from "tesseract.js";
+import "@tensorflow/tfjs-backend-cpu";
+import "@tensorflow/tfjs-backend-webgl";
+
+import * as mobilenet from "@tensorflow-models/mobilenet";
 
 import "./Photo.css";
 const WIDTH = 320; // We will scale the photo width to this
@@ -8,7 +12,8 @@ export const Photo = ({ setBook, acceptPhoto }) => {
   const [streaming, setStreaming] = useState(false);
   const [height, setHeight] = useState(0);
   const [isPhoto, setIsPhoto] = useState(false);
-  const [worker, setWorker] = useState();
+  const [worker, setWorker] = useState(null);
+  const [model, setModel] = useState(null);
   const [captureBook, setCaptureBook] = useState({ author: "", title: "" });
   const video = useRef(null);
   const canvas = useRef(null);
@@ -22,15 +27,16 @@ export const Photo = ({ setBook, acceptPhoto }) => {
   };
 
   useEffect(() => {
-    createWorker("eng").then((worker) => {
-      setWorker(worker);
-    });
-
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: false })
-      .then((stream) => {
+    Promise.all([
+      createWorker("eng"),
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false }),
+      mobilenet.load({ version: 2, alpha: 0.5 }),
+    ])
+      .then(([worker, stream, model]) => {
+        setWorker(worker);
         video.current.srcObject = stream;
         video.current.play();
+        setModel(model);
       })
       .catch((err) => {
         console.error(`An error occurred: ${err}`);
@@ -47,20 +53,30 @@ export const Photo = ({ setBook, acceptPhoto }) => {
       video.current.setAttribute("height", height);
       canvas.current.setAttribute("width", WIDTH);
       canvas.current.setAttribute("height", height);
+      const context = canvas.current.getContext("2d");
+      context.drawImage(canvas.current, 0, 0, WIDTH, height);
+      const data = canvas.current.toDataURL("image/png");
+      photo.current.setAttribute("src", data);
     }
   }, [height, streaming]);
 
   useEffect(() => {
     if (isPhoto) {
-      worker
-        .recognize(photo.current)
-        .then(({ data: { text } }) => {
-          console.log(text);
-          setCaptureBook({ title: "Hello", author: "World" });
-        })
+      model
+        .classify(photo.current)
+        .then((prediction) => 
+          prediction.some(({ className }) => /book/i.test(className))
+            ? Promise.resolve()
+            : Promise.reject(new Error("It is not a book cover!"))
+        )
+        .then(() =>
+          worker.recognize(photo.current).then(({ data: { text } }) => {
+            const [author, ...title] = text.split("\n");
+            setCaptureBook({ title: title.join(' '), author });
+          }),
+        )
         .catch((error) => {
           console.error(error);
-          clearPhoto();
         })
         .finally(() => {
           worker.reinitialize();
@@ -108,16 +124,18 @@ export const Photo = ({ setBook, acceptPhoto }) => {
         />
       </div>
       <section className="Photo-buttons">
-        <button
-          className="btn"
-          onClick={(ev) => {
-            takePicture();
-            ev.preventDefault();
-          }}
-          aria-label="Take a picture from book's cover"
-        >
-          Read cover
-        </button>
+        {model && (
+          <button
+            className="btn"
+            onClick={(ev) => {
+              takePicture();
+              ev.preventDefault();
+            }}
+            aria-label="Take a picture from book's cover"
+          >
+            Read cover
+          </button>
+        )}
         {isPhoto && (
           <button
             className="btn"
