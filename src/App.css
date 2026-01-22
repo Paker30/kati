@@ -20,9 +20,14 @@
   padding: .5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
-  background-color: var(--brand-color_4);
+  background-color: var(--brand-color_5);
   color: var(--theme-body-txt);
   border-radius: 0.125rem;
+}
+
+.btn-disabled {
+  background-color: var(--brand-color_7);
+  cursor: not-allowed;
 }
 
 .Book-btn {

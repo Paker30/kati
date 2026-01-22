@@ -1,34 +1,20 @@
-/* Opción 1
-006ba6
-0496ff
-ffbc42
-d81159
-8f2d56
-
-Opción 2
-264653
-2a9d8f
-e9c46a
-f4a261
-e76f51 */
-
-
 :root {
   --fz: 13px;
   --large-fz: 16px;
   --min-width: 55rem;
-  --theme-body-bg: #DAE0E6;
-  --theme-body-txt: #f3f3f3;
-  --theme-body-dark-txt: #000000;
+  --theme-body-bg: hsl(210, 19%, 88%);
+  --theme-body-txt: hsl(0, 0%, 95%);
+  --theme-body-dark-txt: hsl(0, 0%, 0%);
   --search-size-mx-h: 3rem;
   --zIndex-header: 20;
   --zIndex-component: 5;
-  --brand-color_1: #8f2d56;
-  --brand-color_2: #d81159;
-  --brand-color_3: #ffbc42;
-  --brand-color_4: #0496ff;
-  --brand-color_5: #FFFFFF;
-  --newCommunityTheme-postLine: #ccc;
+  --brand-color_1: hsl(335, 52%, 37%);
+  --brand-color_2: hsl(338, 85%, 46%);
+  --brand-color_3: hsl(39, 100%, 63%);
+  --brand-color_5: hsl(205, 100%, 51%);
+  --brand-color_6: hsl(0, 0%, 100%);
+  --brand-color_7: hsl(206, 90%, 86%);
+  --newCommunityTheme-postLine: hsl(0, 0%, 80%);
   --mobile: 37rem;
   --gap: 0.125rem;
 }
