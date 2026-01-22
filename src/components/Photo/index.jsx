@@ -138,8 +138,8 @@ export const Photo = ({ setBook, acceptPhoto }) => {
         )}
         {isPhoto && (
           <button
-            className="btn"
-            disabled={!isPhoto}
+            className={!isPhoto ? 'btn' : 'btn btn-disabled'}
+            disabled={isPhoto}
             onClick={(ev) => {
               ev.preventDefault();
               setBook(captureBook);
