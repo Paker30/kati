@@ -36,6 +36,8 @@ export const Photo = ({ setBook, acceptPhoto }) => {
         console.error(`An error occurred: ${err}`);
       });
 
+    video.current.addEventListener("canplay", canPlay);
+
     return () => worker?.terminate();
   }, []);
 
@@ -47,10 +49,6 @@ export const Photo = ({ setBook, acceptPhoto }) => {
       canvas.current.setAttribute("height", height);
     }
   }, [height, streaming]);
-
-  useEffect(() => {
-    video.current.addEventListener("canplay", canPlay);
-  }, [video]);
 
   useEffect(() => {
     if (isPhoto) {
