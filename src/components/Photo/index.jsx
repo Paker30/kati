@@ -1,18 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useBooks } from "../../hooks/useBooks";
-import { useRemote } from "../../hooks/useRemote";
-import { useModal } from "../../hooks/useModal";
 import { createWorker } from "tesseract.js";
 
 import "./Photo.css";
 const WIDTH = 320; // We will scale the photo width to this
 
 export const Photo = () => {
-  const { closeModal } = useModal();
-  const { sync } = useRemote();
-  const [author, setAuthor] = useState("");
-  const [title, setTitle] = useState("");
-  const { addBook } = useBooks();
   const [streaming, setStreaming] = useState(false);
   const [height, setHeight] = useState(0);
   const [isPhoto, setIsPhoto] = useState(false);
