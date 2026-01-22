@@ -21,18 +21,6 @@ export const Photo = () => {
   const canvas = useRef(null);
   const photo = useRef(null);
 
-  const enableCamera = () => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: false })
-      .then((stream) => {
-        video.current.srcObject = stream;
-        video.current.play();
-      })
-      .catch((err) => {
-        console.error(`An error occurred: ${err}`);
-      });
-  };
-
   const canPlay = () => {
     if (!streaming) {
       setHeight(video.current.videoHeight / (video.current.videoWidth / WIDTH));
@@ -44,6 +32,17 @@ export const Photo = () => {
     createWorker("eng").then((worker) => {
       setWorker(worker);
     });
+
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false })
+      .then((stream) => {
+        video.current.srcObject = stream;
+        video.current.play();
+      })
+      .catch((err) => {
+        console.error(`An error occurred: ${err}`);
+      });
+
     return () => worker?.terminate();
   }, []);
 
@@ -90,8 +89,6 @@ export const Photo = () => {
   const takePicture = () => {
     const context = canvas.current.getContext("2d");
     if (WIDTH && height) {
-      canvas.current.width = WIDTH;
-      canvas.current.height = height;
       context.drawImage(video.current, 0, 0, WIDTH, height);
       const data = canvas.current.toDataURL("image/png");
       photo.current.setAttribute("src", data);
@@ -118,9 +115,6 @@ export const Photo = () => {
         />
       </div>
       <section>
-        <button className="btn" onClick={enableCamera} aria-label="Enable camera">
-          Enable camera
-        </button>
         <button
           className="btn"
           onClick={(ev) => {

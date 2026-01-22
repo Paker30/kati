@@ -26,6 +26,13 @@
     margin-bottom: 0.5rem;
 }
 
+.Photo > div:has(video) {
+    background-color: var(--newCommunityTheme-postLine);
+}
+.Photo > div:has(img) {
+    background-color: var(--newCommunityTheme-postLine);
+}
+
 .canvas {
     display: none;
 }
