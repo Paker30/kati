@@ -11,7 +11,8 @@ const WIDTH = 320; // We will scale the photo width to this
 export const Photo = ({ setBook, acceptPhoto }) => {
   const [streaming, setStreaming] = useState(false);
   const [height, setHeight] = useState(0);
-  const [isPhoto, setIsPhoto] = useState(false);
+  const [isCameraFired, setCameraFired] = useState(false);
+  const [isBookPhoto, setIsBookPhoto] = useState(false);
   const [worker, setWorker] = useState(null);
   const [model, setModel] = useState(null);
   const [captureBook, setCaptureBook] = useState({ author: "", title: "" });
@@ -61,28 +62,31 @@ export const Photo = ({ setBook, acceptPhoto }) => {
   }, [height, streaming]);
 
   useEffect(() => {
-    if (isPhoto) {
+    if (isCameraFired) {
       model
         .classify(photo.current)
-        .then((prediction) => 
+        .then((prediction) =>
           prediction.some(({ className }) => /book/i.test(className))
             ? Promise.resolve()
-            : Promise.reject(new Error("It is not a book cover!"))
+            : Promise.reject(new Error("It is not a book cover!")),
         )
         .then(() =>
           worker.recognize(photo.current).then(({ data: { text } }) => {
             const [author, ...title] = text.split("\n");
-            setCaptureBook({ title: title.join(' '), author });
+            setCaptureBook({ title: title.join(" "), author });
+            setIsBookPhoto(true);
           }),
         )
         .catch((error) => {
           console.error(error);
+          setIsBookPhoto(false);
         })
         .finally(() => {
           worker.reinitialize();
+          setCameraFired(false);
         });
     }
-  }, [isPhoto, photo]);
+  }, [isCameraFired, photo]);
 
   const clearPhoto = () => {
     const context = canvas.current.getContext("2d");
@@ -90,7 +94,7 @@ export const Photo = ({ setBook, acceptPhoto }) => {
     context.fillRect(0, 0, canvas.current.width, canvas.current.height);
     const data = canvas.current.toDataURL("image/png");
     photo.current.setAttribute("src", data);
-    setIsPhoto(false);
+    setCameraFired(false);
   };
 
   const takePicture = () => {
@@ -99,7 +103,8 @@ export const Photo = ({ setBook, acceptPhoto }) => {
       context.drawImage(video.current, 0, 0, WIDTH, height);
       const data = canvas.current.toDataURL("image/png");
       photo.current.setAttribute("src", data);
-      setIsPhoto(true);
+      setIsBookPhoto(false);
+      setCameraFired(true);
     } else {
       clearPhoto();
     }
@@ -125,30 +130,31 @@ export const Photo = ({ setBook, acceptPhoto }) => {
       </div>
       <section className="Photo-buttons">
         {model && (
-          <button
-            className="btn"
-            onClick={(ev) => {
-              takePicture();
-              ev.preventDefault();
-            }}
-            aria-label="Take a picture from book's cover"
-          >
-            Read cover
-          </button>
-        )}
-        {isPhoto && (
-          <button
-            className={!isPhoto ? 'btn' : 'btn btn-disabled'}
-            disabled={isPhoto}
-            onClick={(ev) => {
-              ev.preventDefault();
-              setBook(captureBook);
-              acceptPhoto(true);
-            }}
-            aria-label="Accept title and author from picture"
-          >
-            Accept Book
-          </button>
+          <>
+            <button
+              className="btn"
+              onClick={(ev) => {
+                takePicture();
+                ev.preventDefault();
+              }}
+              aria-label="Take a picture from book's cover"
+            >
+              Read cover
+            </button>
+
+            <button
+              className={isBookPhoto ? "btn" : "btn btn-disabled"}
+              disabled={!isBookPhoto}
+              onClick={(ev) => {
+                ev.preventDefault();
+                setBook(captureBook);
+                acceptPhoto(true);
+              }}
+              aria-label="Accept title and author from picture"
+            >
+              Accept Book
+            </button>
+          </>
         )}
       </section>
     </article>
