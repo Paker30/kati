@@ -4,6 +4,7 @@ import "@tensorflow/tfjs-backend-cpu";
 import "@tensorflow/tfjs-backend-webgl";
 
 import * as mobilenet from "@tensorflow-models/mobilenet";
+import { Error } from "../Error";
 
 import "./Photo.css";
 const WIDTH = 320; // We will scale the photo width to this
@@ -15,6 +16,8 @@ export const Photo = ({ setBook, acceptPhoto }) => {
   const [isBookPhoto, setIsBookPhoto] = useState(false);
   const [worker, setWorker] = useState(null);
   const [model, setModel] = useState(null);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState('');
   const [captureBook, setCaptureBook] = useState({ author: "", title: "" });
   const video = useRef(null);
   const canvas = useRef(null);
@@ -68,7 +71,7 @@ export const Photo = ({ setBook, acceptPhoto }) => {
         .then((prediction) =>
           prediction.some(({ className }) => /book/i.test(className))
             ? Promise.resolve()
-            : Promise.reject(new Error("It is not a book cover!")),
+            : Promise.reject("It is not a book cover!")
         )
         .then(() =>
           worker.recognize(photo.current).then(({ data: { text } }) => {
@@ -80,6 +83,8 @@ export const Photo = ({ setBook, acceptPhoto }) => {
         .catch((error) => {
           console.error(error);
           setIsBookPhoto(false);
+          setIsError(true);
+          setError(error);
         })
         .finally(() => {
           worker.reinitialize();
@@ -99,6 +104,7 @@ export const Photo = ({ setBook, acceptPhoto }) => {
 
   const takePicture = () => {
     const context = canvas.current.getContext("2d");
+    setIsError(false);
     if (WIDTH && height) {
       context.drawImage(video.current, 0, 0, WIDTH, height);
       const data = canvas.current.toDataURL("image/png");
@@ -120,14 +126,14 @@ export const Photo = ({ setBook, acceptPhoto }) => {
       <div>
         <canvas className="canvas" ref={canvas}></canvas>
       </div>
-      <div>
+      <figure>
         <img
           src=""
           alt="The screen capture will appear in this box."
           ref={photo}
           aria-label="Book's cover picture"
         />
-      </div>
+      </figure>
       <section className="Photo-buttons">
         {model && (
           <>
@@ -156,6 +162,9 @@ export const Photo = ({ setBook, acceptPhoto }) => {
             </button>
           </>
         )}
+      </section>
+      <section>
+        {isError && <Error title={error}></Error>}
       </section>
     </article>
   );
