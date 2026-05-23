@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import elmPlugin from 'vite-plugin-elm';
 import { getClientEnvironment } from './config/env';
 import paths from './config/paths';
 
@@ -6,9 +7,12 @@ const defineConfig = () => {
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
   return {
-    plugins: [react({
-      jsxRuntime: 'classic'
-    })],
+    plugins: [
+      react({
+        jsxRuntime: 'classic'
+      }),
+      elmPlugin()
+    ],
     define: {
       __PUBLIC_URL__: env.PUBLIC_URL,
       global: {}
@@ -23,7 +27,7 @@ const defineConfig = () => {
     test: {
       globals: true,
       environment: 'jsdom',
-      root:'src',
+      root: 'src',
       setupFiles: ['./vitest-setup.js'],
     }
   };
