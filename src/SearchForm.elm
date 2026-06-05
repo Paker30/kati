@@ -100,10 +100,13 @@ view model =
     , Attributes.type_ "text"
     , Events.onInput UpdateSearch
     ] []
-    , Html.select []
-        [ Html.option [Events.onClick (UpdateBy Author)] [Html.text "Author"]
-        , Html.option [Events.onClick (UpdateBy Title)] [Html.text "Title"]
-        ]
+    , Html.select [ Events.on "change" (Decode.map UpdateBy (Decode.field "value" Decode.string |> Decode.andThen (Decode.succeed << stringToBy))) ]
+        ( List.map
+            (\option ->
+                Html.option [ Attributes.value (byToString option) ] [ Html.text (byToString option) ]
+            )
+            [ Author, Title ]
+        )
     , case model.books of
         Just books ->
             Html.span [] [Html.text (books |> length |> String.fromInt |> String.append " books to found")]
@@ -162,3 +165,12 @@ byToString by =
             "Author"
         Title ->
             "Title"
+stringToBy : String -> By
+stringToBy by =
+    case by of
+        "Author" ->
+            Author
+        "Title" ->
+            Title
+        _ ->
+            Author
