@@ -95,29 +95,18 @@ view model =
     , Attributes.style "background-color" "var(--brand-color_5)"
     , Attributes.style "img" "filter: invert(1);"
     ]
-    [ Html.button [ class "btn"] [Html.img [class "icon",Attributes.src "search.svg", Attributes.alt "Search", Attributes.type_ "submit"] []]
-    , Html.input [Attributes.placeholder "Search a book here..."
+    [ Html.input [Attributes.placeholder "Search a book here..."
     , Attributes.type_ "text"
     , Events.onInput UpdateSearch
     ] []
-    , Html.select [ Events.on "change" (Decode.map UpdateBy (Decode.field "value" Decode.string |> Decode.andThen (Decode.succeed << stringToBy))) ]
+    , Html.select [ Events.onInput (UpdateBy << stringToBy) ]
         ( List.map
             (\option ->
                 Html.option [ Attributes.value (byToString option) ] [ Html.text (byToString option) ]
             )
             [ Author, Title ]
         )
-    , case model.books of
-        Just books ->
-            Html.span [] [Html.text (books |> length |> String.fromInt |> String.append " books to found")]
-        Nothing ->
-            Html.span [] [Html.text "No books to found"]
-    , case model.id of
-        Just id ->
-            Html.span [] [Html.text ("Book ID: " ++ id)]
-        Nothing ->
-            Html.span [] [Html.text "No book found"]
-    , Html.span [] [Html.text (model.by |> byToString)]   
+    , Html.button [ class "btn"] [Html.img [class "icon",Attributes.src "search.svg", Attributes.alt "Search", Attributes.type_ "submit"] []]
     ]
 
 searchBook : Maybe (List Book) -> By -> String -> (Maybe Book -> Msg) -> Cmd Msg
@@ -165,12 +154,14 @@ byToString by =
             "Author"
         Title ->
             "Title"
+
 stringToBy : String -> By
 stringToBy by =
     case by of
         "Author" ->
-            Author
+            Debug.log "Author" Author
+            -- Author
         "Title" ->
-            Title
+            Debug.log "Title" Title
         _ ->
-            Author
+            Debug.log "default" Author
