@@ -18,9 +18,13 @@ export const Header = ({ children }) => {
   const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
   const { credentials } = useCredentials();
-  const [, pushLocation] = useLocation();
+  const [, navigate] = useLocation();
   const { loading, populateBooks, startAddingBook, errorAddingBook, books } =
     useBooks();
+
+  //Use refs to track both the DOM node and the Elm app instance
+  const elmNodeRef = useRef(null);
+  const elmAppRef = useRef(null);
 
   const handleSynchronize = (event) => {
     event.preventDefault();
@@ -42,12 +46,8 @@ export const Header = ({ children }) => {
   };
   const handleLogin = (event) => {
     event.preventDefault();
-    pushLocation("/login");
+    navigate("/login");
   };
-
-  //Use refs to track both the DOM node and the Elm app instance
-  const elmNodeRef = useRef(null);
-  const elmAppRef = useRef(null);
 
   useEffect(() => {
     //Only initialize Elm if it hasn't been initialized yet
@@ -55,6 +55,12 @@ export const Header = ({ children }) => {
       elmAppRef.current = Elm.SearchForm.init({
         node: elmNodeRef.current,
       });
+
+      elmAppRef.current.ports.searchResults.subscribe((bookId) => {
+          if (bookId) {
+            navigate(`/book/${bookId}`);
+          }
+        });
     }
   }, []);
 
@@ -71,6 +77,7 @@ export const Header = ({ children }) => {
           updated,
         })),
       );
+      
     }
   }, [books]);
 

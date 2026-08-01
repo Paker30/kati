@@ -10,7 +10,8 @@ import List exposing (length)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode
 
-port booksFromKati : ( Json.Encode.Value -> msg) -> Sub msg
+port booksFromKati : ( Json.Encode.Value -> msg ) -> Sub msg
+port searchResults : ( Maybe String) -> Cmd msg
 
 main : Program () Model Msg
 main =
@@ -48,6 +49,7 @@ type Msg
     | SubscribeBooks Json.Encode.Value
     | UpdateSearch String
     | UpdateBy By
+    | SendBooksToKati (Maybe String)
 
 init : () -> (Model, Cmd Msg)
 init _ =
@@ -67,7 +69,7 @@ update msg model =
         UpdateBy by ->
             ({ model | by = by }, Cmd.none)
         Search book ->
-            ({ model | id = book |> Maybe.map .id }, Cmd.none)
+            ({ model | id = book |> Maybe.map .id }, sendBooksToKati (book |> Maybe.map .id))
         Submit ->
             (model, searchBook model.books model.by model.search Search)
         SubscribeBooks encodeBooks ->
@@ -78,13 +80,15 @@ update msg model =
                     ({ model | books = Just books }, Cmd.none)
                 Err _ ->
                     ({ model | books = Just [] }, Cmd.none)
+        SendBooksToKati bookId ->
+            (model, searchResults bookId)
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     booksFromKati SubscribeBooks
 
 view : Model -> Html Msg
-view model =
+view _ =
     Html.form[Events.onSubmit Submit
     , Attributes.style "display" "flex"
     , Attributes.style "gap" "0.5rem"
@@ -159,9 +163,13 @@ stringToBy : String -> By
 stringToBy by =
     case by of
         "Author" ->
-            Debug.log "Author" Author
+            Author
             -- Author
         "Title" ->
-            Debug.log "Title" Title
+            Title
         _ ->
-            Debug.log "default" Author
+            Author
+
+sendBooksToKati : Maybe (String) -> Cmd Msg
+sendBooksToKati bookId =
+    Task.perform SendBooksToKati (Task.succeed bookId)
