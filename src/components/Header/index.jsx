@@ -8,13 +8,11 @@ import { useCredentials } from "../../hooks/useCredentials";
 import { useBooks } from "../../hooks/useBooks";
 import { useModal } from "../../hooks/useModal";
 import { getAll } from "../../services/books";
-// import { SearchForm } from "../../components/SearchForm";
 import { Elm } from "../../SearchForm.elm";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
 export const Header = ({ children }) => {
-  // const MemoizedSearchForm = memo(SearchForm);
   const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
   const { credentials } = useCredentials();
@@ -65,7 +63,7 @@ export const Header = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (elmNodeRef.current && elmAppRef.current) {
+    if (elmNodeRef.current && elmAppRef.current && (books !== null && books !== undefined)) {
       console.log("Sending books to Elm:", books);
       elmAppRef.current.ports.booksFromKati.send(
         books.map(({ author, id, isRead, key, title, updated }) => ({
