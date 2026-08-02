@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import "./Header.css";
 import { ModalPortal } from "../Modal";
@@ -8,18 +8,21 @@ import { useCredentials } from "../../hooks/useCredentials";
 import { useBooks } from "../../hooks/useBooks";
 import { useModal } from "../../hooks/useModal";
 import { getAll } from "../../services/books";
-import { SearchForm } from "../../components/SearchForm";
+import { Elm } from "../../SearchForm.elm";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
 export const Header = ({ children }) => {
-  const MemoizedSearchForm = memo(SearchForm);
   const { showModal, openModal, closeModal } = useModal();
   const { sync } = useRemote();
   const { credentials } = useCredentials();
-  const [, pushLocation] = useLocation();
-  const { loading, populateBooks, startAddingBook, errorAddingBook } =
+  const [, navigate] = useLocation();
+  const { loading, populateBooks, startAddingBook, errorAddingBook, books } =
     useBooks();
+
+  //Use refs to track both the DOM node and the Elm app instance
+  const elmNodeRef = useRef(null);
+  const elmAppRef = useRef(null);
 
   const handleSynchronize = (event) => {
     event.preventDefault();
@@ -41,8 +44,40 @@ export const Header = ({ children }) => {
   };
   const handleLogin = (event) => {
     event.preventDefault();
-    pushLocation("/login");
+    navigate("/login");
   };
+
+  useEffect(() => {
+    //Only initialize Elm if it hasn't been initialized yet
+    if (elmNodeRef.current && !elmAppRef.current) {
+      elmAppRef.current = Elm.SearchForm.init({
+        node: elmNodeRef.current,
+      });
+
+      elmAppRef.current.ports.searchResults.subscribe((bookId) => {
+          if (bookId) {
+            navigate(`/book/${bookId}`);
+          }
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (elmNodeRef.current && elmAppRef.current && (books !== null && books !== undefined)) {
+      console.log("Sending books to Elm:", books);
+      elmAppRef.current.ports.booksFromKati.send(
+        books.map(({ author, id, isRead, key, title, updated }) => ({
+          author,
+          id,
+          isRead,
+          key,
+          title,
+          updated,
+        })),
+      );
+      
+    }
+  }, [books]);
 
   return (
     <header className="gf-header">
@@ -90,7 +125,8 @@ export const Header = ({ children }) => {
         {children}
       </section>
       <section>
-        <MemoizedSearchForm />
+        {/* <MemoizedSearchForm /> */}
+        <div ref={elmNodeRef}></div>
       </section>
     </header>
   );

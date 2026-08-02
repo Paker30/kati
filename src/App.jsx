@@ -10,36 +10,32 @@ import packageInfo from "../package.json";
 
 const HomePage = React.lazy(() => import("./pages/Home"));
 
-function App() {
-  return (
-    <div className="App">
-      <Suspense fallback={null}>
-        <section className="App-content">
-          <KatiContextProvider>
-            <Header>
-              <div>
-                <Link to="/">
-                  <h1>KATI</h1>
-                </Link>
-                <span>{packageInfo.version}</span>
-              </div>
-            </Header>
-            <main>
-              <Switch>
-                <Route component={HomePage} path="/" />
-                <Route component={Detail} path="/book/:id" />
-                <Route
-                  component={SearchResults}
-                  path="/search/:keyword/:category"
-                />
-                <Route component={Accounts} path="/login" />
-              </Switch>
-            </main>
-          </KatiContextProvider>
-        </section>
-      </Suspense>
-    </div>
-  );
-}
-
-export default App;
+export const App = () => (
+  <div className="App">
+    <Suspense fallback={null}>
+      <section className="App-content">
+        <KatiContextProvider>
+          <Header>
+            <div>
+              <Link to="/">
+                <h1>KATI</h1>
+              </Link>
+              <span>{packageInfo.version}</span>
+            </div>
+          </Header>
+          <main>
+            <Switch>
+              <Route component={HomePage} path="/" />
+              <Route component={Detail} path="/book/:id" />
+              <Route
+                component={SearchResults}
+                path="/search/:keyword/:category"
+              />
+              <Route component={Accounts} path="/login" />
+            </Switch>
+          </main>
+        </KatiContextProvider>
+      </section>
+    </Suspense>
+  </div>
+);
