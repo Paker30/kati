@@ -1,10 +1,8 @@
 import React, { memo } from "react";
-import { SearchForm } from "../../components/SearchForm";
 import { ListOfBooks } from "../../components/ListOfBooks";
 import { useBooks } from "../../hooks/useBooks";
 
 const MemoizedListOfBooks = memo(ListOfBooks);
-const MemoizedSearchForm = memo(SearchForm);
 
 export const SearchResults = ({ params }) => {
   const { keyword, category } = params;
@@ -16,10 +14,6 @@ export const SearchResults = ({ params }) => {
   return (
     <>
       <header>
-        <MemoizedSearchForm
-          initialKeyword={keyword}
-          initialCategory={category}
-        />
       </header>
       <div>
         <MemoizedListOfBooks books={books} />
