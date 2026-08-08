@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { ListOfBooks } from "../../components/ListOfBooks";
 import { useBooks } from "../../hooks/useBooks";
 
@@ -6,15 +6,17 @@ const MemoizedListOfBooks = memo(ListOfBooks);
 
 export const SearchResults = ({ params }) => {
   const { keyword, category } = params;
-  const { books } = useBooks({
+  const { books, loadBooks } = useBooks({
     keyword: decodeURIComponent(keyword),
     category,
   });
 
+  useEffect(() => {
+    loadBooks();
+  }, [keyword, category, loadBooks]);
+
   return (
     <>
-      <header>
-      </header>
       <div>
         <MemoizedListOfBooks books={books} />
       </div>
