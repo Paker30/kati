@@ -15,7 +15,7 @@ describe("Book detail", () => {
       );
       const title = await screen.findByText("Valor y al toro");
       const author = await screen.findByText("Author: Francisco Ibañez");
-      const icon = await screen.findByText("📖");
+      const icon = await screen.findByTestId("open-book-icon");
       expect(title).toBeVisible();
       expect(author).toBeVisible();
       expect(icon).toBeVisible();
@@ -32,7 +32,7 @@ describe("Book detail", () => {
       );
       expect(await screen.findByText("Valor y al toro")).toBeVisible();
       expect(await screen.findByText("Author: Francisco Ibañez")).toBeVisible();
-      expect(await screen.findByText("📘")).toBeVisible();
+      expect(await screen.findByTestId("remove-book-button")).toBeVisible();
     });
   });
 });
