@@ -7,11 +7,11 @@ export const BookDetail = ({ author, title, isReaded, remove }) => (
       <h3>{title}</h3>
       {isReaded ? (
         <div data-testid="open-book-icon">
-          <img className="icon" src="openBook.svg" alt="read book" />
+          <img className="icon" src="/openBook.svg" alt="read book" />
         </div>
       ) : (
         <div data-testid="close-book-icon">
-          <img className="icon" src="closeBook.svg" alt="unread book" />
+          <img className="icon" src="/closeBook.svg" alt="unread book" />
         </div>
       )}
     </header>
@@ -24,7 +24,7 @@ export const BookDetail = ({ author, title, isReaded, remove }) => (
         onClick={remove}
         className="Book-btn"
       >
-        <img className="icon" src="trashBin.svg" alt="remove book" />
+        <img className="icon" src="/trashBin.svg" alt="remove book" />
       </button>
     </footer>
   </div>

@@ -86,7 +86,7 @@ export const Header = ({ children }) => {
           <button data-testid="add-button" className="btn" onClick={openModal}>
             <img
               className="icon"
-              src="plusSquare.svg"
+              src="/plusSquare.svg"
               aria-label="Add book to list"
             />
           </button>
@@ -105,7 +105,7 @@ export const Header = ({ children }) => {
             >
               <img
                 className="icon"
-                src="login.svg"
+                src="/login.svg"
                 aria-label="Log in into the application"
               />
             </button>

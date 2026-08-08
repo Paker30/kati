@@ -28,7 +28,7 @@ Just for fun instead of using some online service or AI it can be done by the co
 2. Run `netpbm` to obtain a `pnm` file
 
     ```bash
-    pngtopnm file.png file.pnm
+    pngtopnm file.png > file.pnm
     ```
 
 3. Run `potrace` to obtain a `svg` file
