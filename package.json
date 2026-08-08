@@ -53,7 +53,7 @@
     "@eslint/js": "^9.39.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
-    "@vitejs/plugin-react": "^5.1.2",
+    "@vitejs/plugin-react": "^5.2.0",
     "@vitest/ui": "^4.0.18",
     "baseline-browser-mapping": "^2.9.11",
     "browserslist": "^4.28.1",
@@ -68,9 +68,9 @@
     "globals": "^17.1.0",
     "jsdom": "^27.0.1",
     "path-browserify": "^1.0.1",
-    "vite": "^7.3.1",
+    "vite": "^8.2.1",
     "vite-plugin-elm": "^3.0.1",
-    "vitest": "^4.0.17",
+    "vitest": "^4.1.0",
     "web-vitals": "^5.1.0"
   },
   "engines": {
