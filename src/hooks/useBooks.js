@@ -3,7 +3,7 @@ import { getAll, insert, getBy, update, remove } from '../services/books';
 import { useData } from './useData';
 import { useAPI } from './useAPI';
 
-const formatBook = ({ id, key, doc }) => ({ id, key, ...doc });
+const formatBook = (book) => book.doc ? ({ id: book.id, key: book.key, ...book.doc }) : book;
 
 export const useBooks = ({ keyword, category } = { keyword: null }) => {
     const { books, isLoading: loading } = useData();
@@ -13,7 +13,7 @@ export const useBooks = ({ keyword, category } = { keyword: null }) => {
 
     const loadBooks = useCallback(() => {
         startAddingBook();
-        const query = category ? getBy[category]({ keyword: keywordToUse }) : getAll();
+        const query = category ? getBy[category.toLowerCase()]({ keyword: keywordToUse }) : getAll();
         query
             .then((books) => {
                 endAddingBook(books.map(formatBook));

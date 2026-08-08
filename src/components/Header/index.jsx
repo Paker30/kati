@@ -17,7 +17,7 @@ export const Header = ({ children }) => {
   const { sync } = useRemote();
   const { credentials } = useCredentials();
   const [, navigate] = useLocation();
-  const { loading, populateBooks, startAddingBook, errorAddingBook, books } =
+  const { loading, populateBooks, startAddingBook, errorAddingBook } =
     useBooks();
 
   //Use refs to track both the DOM node and the Elm app instance
@@ -54,30 +54,14 @@ export const Header = ({ children }) => {
         node: elmNodeRef.current,
       });
 
-      elmAppRef.current.ports.searchResults.subscribe((bookId) => {
-          if (bookId) {
-            navigate(`/book/${bookId}`);
-          }
-        });
+      elmAppRef.current.ports.searchResults.subscribe((search) => {
+        console.log("Received search from Elm:", search);
+        if (search) {
+          navigate(`/search/${search.keyword}/${search.category}`);
+        }
+      });
     }
   }, []);
-
-  useEffect(() => {
-    if (elmNodeRef.current && elmAppRef.current && (books !== null && books !== undefined)) {
-      console.log("Sending books to Elm:", books);
-      elmAppRef.current.ports.booksFromKati.send(
-        books.map(({ author, id, isRead, key, title, updated }) => ({
-          author,
-          id,
-          isRead,
-          key,
-          title,
-          updated,
-        })),
-      );
-      
-    }
-  }, [books]);
 
   return (
     <header className="gf-header">
