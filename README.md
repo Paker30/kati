@@ -13,3 +13,26 @@ I keep a list of books I want to read (no matter if I have them or I have to acq
 KATI allows the user to share the book list between devices thanks to Google Drive, when a users login for the first time, KATI creates an application inside the user's Google Drive account, since that moment the user can have the list synchronized between all the devices he wants.
 
 > ⚠️ At the current version, there's no alternative to Google Drive which means the user wouldn't be able to use KATI unless he had a Google account
+
+## How to convert PNG to SVG
+
+Just for fun instead of using some online service or AI it can be done by the combination of two commands:
+
+1. Install `netpbm` and `potrace`
+
+    ```bash
+    brew install netpbm
+    brew install potrace
+    ```
+
+2. Run `netpbm` to obtain a `pnm` file
+
+    ```bash
+    pngtopnm file.png > file.pnm
+    ```
+
+3. Run `potrace` to obtain a `svg` file
+
+    ```bash
+    potrace file.pnm -s -o file.svg
+    ```
