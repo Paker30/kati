@@ -1,7 +1,10 @@
+import { createRequire } from 'module';
 import react from '@vitejs/plugin-react';
 import elmPlugin from 'vite-plugin-elm';
 import { getClientEnvironment } from './config/env';
 import paths from './config/paths';
+
+const require = createRequire(import.meta.url);
 
 const defineConfig = () => {
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
@@ -11,7 +14,11 @@ const defineConfig = () => {
       react({
         jsxRuntime: 'classic'
       }),
-      elmPlugin()
+      elmPlugin({
+        nodeElmCompilerOptions: {
+          pathToElm: require.resolve('elm/bin/elm')
+        }
+      })
     ],
     define: {
       __PUBLIC_URL__: env.PUBLIC_URL,
@@ -28,7 +35,7 @@ const defineConfig = () => {
       globals: true,
       environment: 'jsdom',
       root: 'src',
-      setupFiles: ['./vitest-setup.js'],
+      setupFiles: ['../vitest-setup.js'],
     }
   };
 };
