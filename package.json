@@ -58,7 +58,7 @@
     "baseline-browser-mapping": "^2.9.11",
     "browserslist": "^4.28.1",
     "dotenv": "^17.2.3",
-    "dotenv-expand": "^12.0.3",
+    "dotenv-expand": "^1000.0.0",
     "elm": "^0.19.1-6",
     "elm-format": "^0.8.8",
     "elm-live": "^4.0.2",
